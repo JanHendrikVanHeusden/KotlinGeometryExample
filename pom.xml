@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>nl.jhvh</groupId>
+    <artifactId>Kotlin10ReasonsWhy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Kotlin10ReasonsWhy</name>
+    <description>Code to support Guild Night "Kotlin - 10 Reasons why"</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>15</java.version>
+        <kotlin.version>1.4.21</kotlin.version>
+
+        <!-- Take care when upgrading slf4j to version 1.8 or higher!
+             Compatibility with log4j 2 may be broken, see https://logging.apache.org/log4j/2.x/log4j-slf4j-impl/ !!
+             So another implementation for log4j-slf4j-impl will probably be required (log4j-slf4j18-impl)
+        -->
+        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <log4j.version>2.14.0</log4j.version>
+        <kotlin-logging.version>1.8.3</kotlin-logging.version>
+
+        <!-- Maven plugins -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+
+        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
+
+        <!-- Test -->
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <junit.platform.version>1.0.3</junit.platform.version>
+        <assertj-core.version>3.18.1</assertj-core.version>
+        <mockk.version>1.10.3-jdk8</mockk.version>
+
+    </properties>
+
+    <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <!-- When running mixed code (Kotlin & Java), this plugin (Kotlin compile)
+                     must run BEFORE maven-compiler-plugin (Java compile) runs.
+                     So in the pom.xml file, this plugin must precede the maven-compiler-plugin !
+                -->
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <!-- Kotlin and Java sources have separate directories in this project, configure both -->
+                                <sourceDir>src/main/kotlin</sourceDir>
+                                <sourceDir>src/main/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>src/test/kotlin</sourceDir>
+                                <sourceDir>src/test/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <jvmTarget>13</jvmTarget>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+                <executions>
+                    <!-- Default execution replaced because of mixed sources (Kotlin, Java).
+                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
+                    -->
+                    <!--                    <execution>-->
+                    <!--                        <id>compile</id>-->
+                    <!--                        <phase>compile</phase>-->
+                    <!--                        <goals>-->
+                    <!--                            <goal>compile</goal>-->
+                    <!--                        </goals>-->
+                    <!--                    </execution>-->
+                    <!--                    <execution>-->
+                    <!--                        <id>testCompile</id>-->
+                    <!--                        <phase>test-compile</phase>-->
+                    <!--                        <goals>-->
+                    <!--                            <goal>testCompile</goal>-->
+                    <!--                        </goals>-->
+                    <!--                    </execution>-->
+
+                    <!-- Replacing default-compile as it is treated specially by maven
+                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
+                    -->
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <!-- Replacing default-testCompile as it is treated specially by maven -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>java-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>java-test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <!-- * To check for dependency updates: mvn versions:display-dependency-updates
+                     * To configure additional source directories (see add-source goal)
+                -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <!-- Configure additional source directories (besides src/main/kotlin)
+                                 In our case: specific source directories for Kotlin and for Kotlin. Also for test sources.
+                                 Not advised for normal (production) use! -->
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <!-- Kotlin standard library for JDK 8 and higher -->
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-common</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Logging: slf4j implemented by Log4J 2 -->
+        <!-- Kotlin logging -->
+        <dependency>
+            <groupId>io.github.microutils</groupId>
+            <artifactId>kotlin-logging</artifactId>
+            <version>${kotlin-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <!-- Take care when upgrading slf4j to version 1.8 or higher!
+                 Compatibility with log4j 2 may be broken, see https://logging.apache.org/log4j/2.x/log4j-slf4j-impl/ !!
+                 So another implementation for log4j-slf4j-impl will probably be required (log4j-slf4j18-impl)
+            -->
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- Test-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>${mockk.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
