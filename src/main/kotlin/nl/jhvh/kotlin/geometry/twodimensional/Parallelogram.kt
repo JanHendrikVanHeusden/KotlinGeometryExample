@@ -1,14 +1,14 @@
 package nl.jhvh.kotlin.geometry.twodimensional
 
 import nl.jhvh.java.geometry.twodimensional.Parallelogram
-import nl.jhvh.kotlin.geometry.degreesToRadiansFactor
 import nl.jhvh.kotlin.conversion.m2ToSquareFeet
 import nl.jhvh.kotlin.conversion.meterToFeet
+import nl.jhvh.kotlin.geometry.degreesToRadiansFactor
 import nl.jhvh.kotlin.geometry.radiansToDegrees
 import nl.jhvh.kotlin.util.logger
 import kotlin.math.sin
 
-data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double): TwoDimensional {
+data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double) : TwoDimensional {
 
     val angleRadians: Double = angleDegrees * degreesToRadiansFactor
     val length: Double = s1

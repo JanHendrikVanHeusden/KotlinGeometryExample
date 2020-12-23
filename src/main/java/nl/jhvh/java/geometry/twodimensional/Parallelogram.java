@@ -91,7 +91,7 @@ public class Parallelogram implements TwoDimensional {
     public static void main(String[] args) {
         // Let's define a parallelogram with s2 = 5, and where the tangent of the angle is 4/3
         // This results in a width of 4
-        double angle = radiansToDegrees(Math.atan(4.0/3.0));
+        double angle = radiansToDegrees(Math.atan(4.0 / 3.0));
         Parallelogram parallelogram = new Parallelogram(10.0D, 5.0D, angle);
 
         System.out.println("The " + parallelogram + " has length " + parallelogram.getLength() +

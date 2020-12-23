@@ -2,7 +2,7 @@ package nl.jhvh.kotlin.geometry.twodimensional
 
 import nl.jhvh.kotlin.geometry.rectangleDegrees
 
-data class Rectangle(val length: Double, val width: Double): TwoDimensional by Parallelogram(length, width, rectangleDegrees)
+data class Rectangle(val length: Double, val width: Double) : TwoDimensional by Parallelogram(length, width, rectangleDegrees)
 
 fun main() {
     val rectangle = Rectangle(10.0, 20.0)
