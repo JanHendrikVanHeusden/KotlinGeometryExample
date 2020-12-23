@@ -37,6 +37,7 @@
         <junit.platform.version>1.0.3</junit.platform.version>
         <assertj-core.version>3.18.1</assertj-core.version>
         <mockk.version>1.10.3-jdk8</mockk.version>
+        <mockito.version>3.6.28</mockito.version>
 
     </properties>
 
@@ -161,6 +162,7 @@
                 <version>${build-helper-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>add-source</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <!-- Configure additional source directories (besides src/main/kotlin)
@@ -174,7 +176,22 @@
                             </sources>
                         </configuration>
                     </execution>
-                </executions>
+                <execution>
+                    <id>add-test-source</id>
+                    <phase>generate-test-sources</phase>
+                    <goals>
+                        <!-- Configure additional source directories (besides src/test/kotlin)
+                             In our case: specific source directories for Kotlin and for Kotlin. Also for test sources.
+                             Not advised for normal (production) use! -->
+                        <goal>add-test-source</goal>
+                    </goals>
+                    <configuration>
+                        <sources>
+                            <source>src/test/java</source>
+                        </sources>
+                    </configuration>
+                </execution>
+            </executions>
             </plugin>
 
         </plugins>
@@ -274,12 +291,41 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
+            <!-- mockk, the mocking library for Kotlin, which benefits from the Kotlin language goodies like infix methods -->
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
             <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Mockito, more or less de-facto standard for mocking with Java -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.nhaarman/mockito-kotlin -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.nhaarman</groupId>-->
+        <!--            <artifactId>mockito-kotlin</artifactId>-->
+        <!--            <version>1.6.0</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
 
     </dependencies>
 
