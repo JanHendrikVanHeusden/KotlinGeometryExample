@@ -2,9 +2,9 @@ package nl.jhvh.java.conversion;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-public class ImperialConversion {
+public class ImperialMetricConversion {
 
-    private ImperialConversion() {
+    private ImperialMetricConversion() {
         throw new NotImplementedException(this.getClass().getName() + " is a utility class; do not instantiate!");
     }
 
@@ -53,15 +53,15 @@ public class ImperialConversion {
     }
 
     public static double inchToMeter(double inches) {
-        return feetToMeter(inches * footToInchFactor);
+        return feetToMeter(inches / footToInchFactor);
     }
 
     public static double squareInchToM2(double squareInches) {
-        return squareFeetToM2(squareInches * squareFootToSquareInchFactor);
+        return squareFeetToM2(squareInches / squareFootToSquareInchFactor);
     }
 
     public static double cubicInchToM3(double cubicInches) {
-        return cubicFeetToM3(cubicInches * cubicFootToCubicInchFactor);
+        return cubicFeetToM3(cubicInches / cubicFootToCubicInchFactor);
     }
 
 }

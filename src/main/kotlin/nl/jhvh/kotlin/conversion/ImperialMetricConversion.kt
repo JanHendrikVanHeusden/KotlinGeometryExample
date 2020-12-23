@@ -21,6 +21,6 @@ fun Double.feetToMeter(): Double = this / meterToFeetFactor
 fun Double.squareFeetToM2(): Double = this / m2ToSquareFeetFactor
 fun Double.cubicFeetToM3(): Double = this / m3ToCubicFeetFactor
 
-fun Double.inchToMeter(): Double = this.feetToMeter() * footToInchFactor
-fun Double.squareInchToM2(): Double = this.squareFeetToM2() * squareFootToSquareInchFactor
-fun Double.cubicInchToM3(): Double = this.cubicFeetToM3() * cubicFootToCubicInchFactor
+fun Double.inchToMeter(): Double = this.feetToMeter() / footToInchFactor
+fun Double.squareInchToM2(): Double = this.squareFeetToM2() / squareFootToSquareInchFactor
+fun Double.cubicInchToM3(): Double = this.cubicFeetToM3() / cubicFootToCubicInchFactor

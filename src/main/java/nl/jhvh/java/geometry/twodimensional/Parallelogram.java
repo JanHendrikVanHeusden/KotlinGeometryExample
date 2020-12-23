@@ -6,8 +6,8 @@ import nl.jhvh.java.util.Log;
 import java.util.Objects;
 
 import static java.lang.Math.sin;
-import static nl.jhvh.java.conversion.ImperialConversion.m2ToSquareFeet;
-import static nl.jhvh.java.conversion.ImperialConversion.meterToFeet;
+import static nl.jhvh.java.conversion.ImperialMetricConversion.m2ToSquareFeet;
+import static nl.jhvh.java.conversion.ImperialMetricConversion.meterToFeet;
 import static nl.jhvh.java.geometry.GeometryUtil.degreesToRadiansFactor;
 import static nl.jhvh.java.geometry.GeometryUtil.radiansToDegrees;
 
