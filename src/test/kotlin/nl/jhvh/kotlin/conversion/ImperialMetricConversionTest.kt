@@ -5,7 +5,12 @@ import org.assertj.core.api.Assertions.offset
 import org.junit.jupiter.api.Test
 
 
-/** Unit tests for conversion imperial to metric and vice versa  */
+/**
+ * Unit tests for conversion imperial to metric and vice versa
+ *
+ * This is for DEMO only to show difference between Java and Kotlin (using extension methods in Kotlin).
+ * For any real use, make sure to use the stuff from the `javax.measure` package instead !!
+ */
 internal class ImperialMetricConversionTest {
 
     /** Unit test for [meterToFeetFactor]  */
@@ -20,12 +25,6 @@ internal class ImperialMetricConversionTest {
         assertThat(m2ToSquareFeetFactor).isCloseTo(10.7639104, offset(0.000001))
     }
 
-    /** Unit test for [m3ToCubicFeetFactor]  */
-    @Test
-    fun `test m3ToCubicFeetFactor`() {
-        assertThat(m3ToCubicFeetFactor).isCloseTo(35.3146667, offset(0.000001))
-    }
-
     /** Unit test for [footToInchFactor]  */
     @Test
     fun `test footToInchFactor`() {
@@ -36,12 +35,6 @@ internal class ImperialMetricConversionTest {
     @Test
     fun `test squareFootToSquareInchFactor`() {
         assertThat(squareFootToSquareInchFactor).isEqualTo(144) // 12 * 12
-    }
-
-    /** Unit test for [cubicFootToCubicInchFactor]  */
-    @Test
-    fun `test cubicFootToCubicInchFactor`() {
-        assertThat(cubicFootToCubicInchFactor).isEqualTo(1728) // 12 * 12 * 12
     }
 
     /** Unit test for [meterToFeet]  */
@@ -66,18 +59,6 @@ internal class ImperialMetricConversionTest {
         assertThat(3.49498746312.m2ToSquareFeet()).isCloseTo(m2ToSquareFeetFactor * 3.49498746312, offset(0.000001))
         assertThat(3.49498746312e-16.m2ToSquareFeet()).isCloseTo(m2ToSquareFeetFactor * 3.49498746312e-16, offset(1e-26))
         assertThat(5.1486e24.m2ToSquareFeet()).isCloseTo(m2ToSquareFeetFactor * 5.1486e24, offset(1e16))
-    }
-
-    /** Unit test for [m3ToCubicFeet]  */
-    @Test
-    fun `test m3ToCubicFeet`() {
-        assertThat(245.2.m3ToCubicFeet()).isCloseTo(8659.15628, offset(0.0001))
-        assertThat(1.0.m3ToCubicFeet()).isCloseTo(m3ToCubicFeetFactor, offset(0.000001))
-        assertThat(0.0.m3ToCubicFeet()).isEqualTo(0.0)
-        assertThat((-2.0).m3ToCubicFeet()).isCloseTo(m3ToCubicFeetFactor * -2.0, offset(0.000001))
-        assertThat(3.49498746312.m3ToCubicFeet()).isCloseTo(m3ToCubicFeetFactor * 3.49498746312, offset(0.000001))
-        assertThat(3.49498746312e-16.m3ToCubicFeet()).isCloseTo(m3ToCubicFeetFactor * 3.49498746312e-16, offset(1e-26))
-        assertThat(5.1486e24.m3ToCubicFeet()).isCloseTo(m3ToCubicFeetFactor * 5.1486e24, offset(1e16))
     }
 
     /** Unit test for [meterToInch]  */
@@ -107,21 +88,6 @@ internal class ImperialMetricConversionTest {
                 .isCloseTo(m2ToSquareFeetFactor * squareFootToSquareInchFactor * 3.49498746312e-16, offset(1e-26))
     }
 
-    /** Unit test for [m3ToCubicInch]  */
-    @Test
-    fun `test m3ToCubicInch`() {
-        assertThat(14.89.m3ToCubicInch())
-                .isCloseTo(908643.55, offset(0.01))
-        assertThat(1.0.m3ToCubicInch())
-                .isCloseTo(m3ToCubicFeetFactor * cubicFootToCubicInchFactor, offset(0.000001))
-        assertThat((-2.0).m3ToCubicInch())
-                .isCloseTo(m3ToCubicFeetFactor * cubicFootToCubicInchFactor * -2.0, offset(0.000001))
-        assertThat(3.49498746312.m3ToCubicInch())
-                .isCloseTo(m3ToCubicFeetFactor * cubicFootToCubicInchFactor * 3.49498746312, offset(0.000001))
-        assertThat(3.49498746312e-16.m3ToCubicInch())
-                .isCloseTo(m3ToCubicFeetFactor * cubicFootToCubicInchFactor * 3.49498746312e-16, offset(1e-26))
-    }
-
     /** Unit test for [feetToMeter]  */
     @Test
     fun `test feetToMeter`() {
@@ -144,18 +110,6 @@ internal class ImperialMetricConversionTest {
         assertThat(3.49498746312.squareFeetToM2()).isCloseTo(1.0 / m2ToSquareFeetFactor * 3.49498746312, offset(0.000001))
         assertThat(3.49498746312e-16.squareFeetToM2()).isCloseTo(1.0 / m2ToSquareFeetFactor * 3.49498746312e-16, offset(1e-26))
         assertThat(5.1486e24.squareFeetToM2()).isCloseTo(1.0 / m2ToSquareFeetFactor * 5.1486e24, offset(1e16))
-    }
-
-    /** Unit test for [cubicFeetToM3]  */
-    @Test
-    fun `test cubicFeetToM3`() {
-        assertThat(642.1.cubicFeetToM3()).isCloseTo(18.1822472, offset(0.000001))
-        assertThat(1.0.cubicFeetToM3()).isCloseTo(1.0 / m3ToCubicFeetFactor, offset(0.000001))
-        assertThat(0.0.cubicFeetToM3()).isEqualTo(0.0)
-        assertThat((-2.0).cubicFeetToM3()).isCloseTo(1.0 / m3ToCubicFeetFactor * -2.0, offset(0.000001))
-        assertThat(3.49498746312.cubicFeetToM3()).isCloseTo(1.0 / m3ToCubicFeetFactor * 3.49498746312, offset(0.000001))
-        assertThat(3.49498746312e-16.cubicFeetToM3()).isCloseTo(1.0 / m3ToCubicFeetFactor * 3.49498746312e-16, offset(1e-26))
-        assertThat(5.1486e24.cubicFeetToM3()).isCloseTo(1.0 / m3ToCubicFeetFactor * 5.1486e24, offset(1e16))
     }
 
     /** Unit test for [inchToMeter]  */
@@ -182,15 +136,4 @@ internal class ImperialMetricConversionTest {
         assertThat(5.1486e24.squareInchToM2()).isCloseTo(1.0 / (m2ToSquareFeetFactor * squareFootToSquareInchFactor) * 5.1486e24, offset(1e16))
     }
 
-    /** Unit test for [cubicInchToM3]  */
-    @Test
-    fun `test cubicInchToM3`() {
-        assertThat(683456456.0.cubicInchToM3()).isCloseTo(11199.8447, offset(0.001))
-        assertThat(1.0.cubicInchToM3()).isCloseTo(1.0 / (m3ToCubicFeetFactor * cubicFootToCubicInchFactor), offset(0.000001))
-        assertThat(0.0.cubicInchToM3()).isEqualTo(0.0)
-        assertThat((-2.0).cubicInchToM3()).isCloseTo(1.0 / (m3ToCubicFeetFactor * cubicFootToCubicInchFactor) * -2.0, offset(0.000001))
-        assertThat(3.49498746312.cubicInchToM3()).isCloseTo(1.0 / (m3ToCubicFeetFactor * cubicFootToCubicInchFactor) * 3.49498746312, offset(0.000001))
-        assertThat(3.49498746312e-16.cubicInchToM3()).isCloseTo(1.0 / (m3ToCubicFeetFactor * cubicFootToCubicInchFactor) * 3.49498746312e-16, offset(1e-26))
-        assertThat(5.1486e24.cubicInchToM3()).isCloseTo(1.0 / (m3ToCubicFeetFactor * cubicFootToCubicInchFactor) * 5.1486e24, offset(1e16))
-    }
 }

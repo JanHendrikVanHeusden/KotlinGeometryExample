@@ -2,6 +2,10 @@ package nl.jhvh.java.geometry;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+/**
+ * This is for DEMO only to show difference between Java and Kotlin (using extension methods in Kotlin).
+ * For any real use, make sure to use the stuff from the `javax.measure` package instead !!
+ */
 public class GeometryUtil {
 
     private GeometryUtil() {
@@ -10,15 +14,15 @@ public class GeometryUtil {
 
     public static final double RECTANGLE_DEGREES = 90;
 
-    public static double radiansToDegreesFactor = 180 / Math.PI;
-    public static double degreesToRadiansFactor = Math.PI / 180;
+    public static final double RADIANS_TO_DEGREES_FACTOR = 180 / Math.PI;
+    public static final double DEGREES_TO_RADIANS_FACTOR = Math.PI / 180;
 
     public static double radiansToDegrees(double radians) {
-        return radians * radiansToDegreesFactor;
+        return radians * RADIANS_TO_DEGREES_FACTOR;
     }
 
-    public static double getDegreesToRadians(double radians) {
-        return radians * degreesToRadiansFactor;
+    public static double degreesToRadians(double radians) {
+        return radians * DEGREES_TO_RADIANS_FACTOR;
     }
 
 }

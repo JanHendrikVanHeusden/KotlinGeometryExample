@@ -6,6 +6,7 @@ import nl.jhvh.kotlin.conversion.meterToFeet
 import nl.jhvh.kotlin.geometry.degreesToRadiansFactor
 import nl.jhvh.kotlin.geometry.radiansToDegrees
 import nl.jhvh.kotlin.util.logger
+import kotlin.math.atan
 import kotlin.math.sin
 
 data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double) : TwoDimensional {
@@ -27,7 +28,7 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
 fun main() {
     // Let's define a parallelogram with s2 = 5, and where the tangent of the angle is 4/3
     // This results in a width of 4
-    val angle = Math.atan(4.0 / 3.0).radiansToDegrees()
+    val angle = atan(4.0 / 3.0).radiansToDegrees()
     val parallelogram = Parallelogram(10.0, 5.0, angle)
 
     println("The $parallelogram has length ${parallelogram.length} and width ${parallelogram.width}")

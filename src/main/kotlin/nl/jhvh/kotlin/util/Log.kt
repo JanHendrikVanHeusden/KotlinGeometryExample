@@ -3,7 +3,7 @@ package nl.jhvh.kotlin.util
 import mu.KLogger
 import mu.NamedKLogging
 
-fun logger(name: String): KLogger = NamedKLogging(name).logger
-fun logger(clazz: Class<*>): KLogger = logger(clazz.name)
+internal fun logger(name: String): KLogger = NamedKLogging(name).logger
+internal fun logger(clazz: Class<*>): KLogger = logger(clazz.name)
 
-inline fun <reified T : Any> T.logger(): KLogger = logger(T::class.java)
+internal inline fun <reified T : Any> T.logger(): KLogger = logger(T::class.java)

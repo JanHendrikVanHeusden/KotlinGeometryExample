@@ -8,7 +8,7 @@ import java.util.Objects;
 import static java.lang.Math.sin;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.m2ToSquareFeet;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.meterToFeet;
-import static nl.jhvh.java.geometry.GeometryUtil.degreesToRadiansFactor;
+import static nl.jhvh.java.geometry.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
 import static nl.jhvh.java.geometry.GeometryUtil.radiansToDegrees;
 
 public class Parallelogram implements TwoDimensional {
@@ -25,7 +25,7 @@ public class Parallelogram implements TwoDimensional {
         this.s1 = s1;
         this.s2 = s2;
         this.length = s1;
-        this.angleRadians = angleDegrees * degreesToRadiansFactor;
+        this.angleRadians = angleDegrees * DEGREES_TO_RADIANS_FACTOR;
     }
 
     @Override
@@ -68,10 +68,10 @@ public class Parallelogram implements TwoDimensional {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Parallelogram that = (Parallelogram) o;
-        return Double.compare(that.s1, s1) == 0 &&
-                Double.compare(that.s2, s2) == 0 &&
-                Double.compare(that.angleRadians, angleRadians) == 0;
+        Parallelogram other = (Parallelogram) o;
+        return Double.compare(other.s1, s1) == 0 &&
+                Double.compare(other.s2, s2) == 0 &&
+                Double.compare(other.angleRadians, angleRadians) == 0;
     }
 
     @Override
