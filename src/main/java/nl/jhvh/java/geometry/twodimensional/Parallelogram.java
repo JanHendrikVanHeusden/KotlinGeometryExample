@@ -13,9 +13,13 @@ import static nl.jhvh.java.geometry.GeometryUtil.radiansToDegrees;
 
 public class Parallelogram implements TwoDimensional {
 
+    private static final double MIN_ANGLE_DEGREES = 0.0;
+    private static final double MAX_ANGLE_DEGREES = 90.0;
+
     private final double s1;
     private final double s2;
     private final double angleRadians;
+    private final double angleDegrees;
     private final double length;
 
     // Needs to be Guava AtomicDouble in order to be thread safe (Java has no AtomicDouble)
@@ -25,7 +29,9 @@ public class Parallelogram implements TwoDimensional {
         this.s1 = s1;
         this.s2 = s2;
         this.length = s1;
+        this.angleDegrees = angleDegrees;
         this.angleRadians = angleDegrees * DEGREES_TO_RADIANS_FACTOR;
+        validateInput();
     }
 
     @Override
@@ -62,6 +68,19 @@ public class Parallelogram implements TwoDimensional {
 
     public double getAngleRadians() {
         return angleRadians;
+    }
+
+    public double getAngleDegrees() {
+        return angleDegrees;
+    }
+
+    private void validateInput() {
+        if (this.s1 < 0.0 || s2 < 0.0) {
+            throw new IllegalArgumentException("Lengths of both sides must be positive, but s1 = " + s1 + " and s2 = " + s2);
+        }
+        if (angleDegrees < MIN_ANGLE_DEGREES || angleDegrees >= MAX_ANGLE_DEGREES) {
+            throw new IllegalArgumentException("The angle of the parallelogram must be in range " + MIN_ANGLE_DEGREES + " and " + MAX_ANGLE_DEGREES + ", but is " + angleDegrees);
+        }
     }
 
     @Override

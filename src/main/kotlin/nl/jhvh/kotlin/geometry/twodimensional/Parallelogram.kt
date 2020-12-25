@@ -1,6 +1,5 @@
 package nl.jhvh.kotlin.geometry.twodimensional
 
-import nl.jhvh.java.geometry.twodimensional.Parallelogram
 import nl.jhvh.kotlin.conversion.m2ToSquareFeet
 import nl.jhvh.kotlin.conversion.meterToFeet
 import nl.jhvh.kotlin.geometry.degreesToRadiansFactor
@@ -9,10 +8,19 @@ import nl.jhvh.kotlin.util.logger
 import kotlin.math.atan
 import kotlin.math.sin
 
+private const val minAngleDegrees = 0.0
+private const val maxAngleDegrees = 90.0
+
 data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double) : TwoDimensional {
+
+    init {
+        validateInput()
+    }
 
     val angleRadians: Double = angleDegrees * degreesToRadiansFactor
     val length: Double = s1
+
+    // pretend that it's a heavy initialization, so lazy
     val width: Double by lazy {
         logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.width" }
         s2 * sin(angleRadians)
@@ -21,7 +29,15 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
     override val circumference: Double = (s1 + s2) * 2
 
     // lazy because it uses width (which is also lazy)
-    override val area: Double by lazy { s1 * width }
+    override val area: Double by lazy {
+        logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.area" }
+        s1 * width
+    }
+
+    fun validateInput() {
+        require(s1 >= 0.0 && s2 >= 0.0) { "Lengths of both sides must be positive, but sides s1 , s2 are $s1 , $s2" }
+        require(angleDegrees in minAngleDegrees..maxAngleDegrees) { "The angle of a parallelogram must be in range $minAngleDegrees and $maxAngleDegrees, but is $angleDegrees" }
+    }
 
 }
 
