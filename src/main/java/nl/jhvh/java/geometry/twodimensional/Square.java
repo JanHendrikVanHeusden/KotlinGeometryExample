@@ -6,8 +6,11 @@ public class Square implements TwoDimensional {
 
     private final Rectangle delegate;
 
+    private final Double side;
+
     public Square(double side) {
         this.delegate = new Rectangle(side, side);
+        this.side = side;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class Square implements TwoDimensional {
     }
 
     public double getSide() {
-        return delegate.getLength();
+        return this.side;
     }
 
     @Override
