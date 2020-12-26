@@ -76,10 +76,10 @@ public class Parallelogram implements TwoDimensional {
 
     private void validateInput() {
         if (this.s1 < 0.0 || s2 < 0.0) {
-            throw new IllegalArgumentException("Lengths of both sides must be positive, but s1 = " + s1 + " and s2 = " + s2);
+            throw new IllegalArgumentException("Lengths of both sides must be positive, but sides s1 , s2 are " + s1 + " , " + s2);
         }
-        if (angleDegrees < MIN_ANGLE_DEGREES || angleDegrees >= MAX_ANGLE_DEGREES) {
-            throw new IllegalArgumentException("The angle of the parallelogram must be in range " + MIN_ANGLE_DEGREES + " and " + MAX_ANGLE_DEGREES + ", but is " + angleDegrees);
+        if (angleDegrees < MIN_ANGLE_DEGREES || angleDegrees > MAX_ANGLE_DEGREES) {
+            throw new IllegalArgumentException("The angle of a parallelogram must be in range " + MIN_ANGLE_DEGREES + " and " + MAX_ANGLE_DEGREES + ", but is " + angleDegrees);
         }
     }
 
@@ -103,7 +103,7 @@ public class Parallelogram implements TwoDimensional {
         return "Parallelogram{" +
                 "s1=" + s1 +
                 ", s2=" + s2 +
-                ", angleRadians=" + angleRadians +
+                ", angleDegrees=" + angleDegrees +
                 '}';
     }
 

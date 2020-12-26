@@ -45,7 +45,7 @@ public class Rectangle implements TwoDimensional {
 
     @Override
     public String toString() {
-        return "Parallelogram{" +
+        return "Rectangle{" +
                 "length=" + getLength() +
                 ", width=" + getWidth() +
                 '}';
