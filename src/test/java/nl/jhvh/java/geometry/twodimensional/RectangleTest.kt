@@ -180,7 +180,6 @@ internal class RectangleTest {
 
         // verify that the lazy attribute was not called
         verify (exactly = 0) { parallelogramDelegateMock.area }
-        confirmVerified(parallelogramDelegateMock)
     }
 
 }
