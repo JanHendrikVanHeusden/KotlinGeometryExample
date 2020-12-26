@@ -8,8 +8,14 @@ public class Rectangle implements TwoDimensional {
 
     private final Parallelogram delegate;
 
+    private final double width;
+
+    private final double length;
+
     public Rectangle(double length, double width) {
         this.delegate = new Parallelogram(length, width, RECTANGLE_DEGREES);
+        this.length = length;
+        this.width = width;
     }
 
     @Override
@@ -23,11 +29,11 @@ public class Rectangle implements TwoDimensional {
     }
 
     public double getLength() {
-        return delegate.getLength();
+        return length;
     }
 
     public double getWidth() {
-        return delegate.getWidth();
+        return width;
     }
 
     @Override
@@ -46,8 +52,8 @@ public class Rectangle implements TwoDimensional {
     @Override
     public String toString() {
         return "Rectangle{" +
-                "length=" + getLength() +
-                ", width=" + getWidth() +
+                "length=" + length +
+                ", width=" + width +
                 '}';
     }
 
