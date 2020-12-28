@@ -34,7 +34,7 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
         s1 * width
     }
 
-    fun validateInput() {
+    private fun validateInput() {
         require(s1 >= 0.0 && s2 >= 0.0) { "Lengths of both sides must be positive, but sides s1 , s2 are $s1 , $s2" }
         require(angleDegrees in minAngleDegrees..maxAngleDegrees) { "The angle of a parallelogram must be in range $minAngleDegrees and $maxAngleDegrees, but is $angleDegrees" }
     }

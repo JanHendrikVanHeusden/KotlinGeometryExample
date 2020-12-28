@@ -4,23 +4,24 @@ import java.util.Objects;
 
 public class Square implements TwoDimensional {
 
-    private final Rectangle delegate;
+    // Non-private and non-final for testability...
+    protected Rectangle delegateFor2Dimensional;
 
     private final Double side;
 
     public Square(double side) {
-        this.delegate = new Rectangle(side, side);
+        this.delegateFor2Dimensional = new Rectangle(side, side);
         this.side = side;
     }
 
     @Override
     public double getCircumference() {
-        return delegate.getCircumference();
+        return delegateFor2Dimensional.getCircumference();
     }
 
     @Override
     public double getArea() {
-        return delegate.getArea();
+        return delegateFor2Dimensional.getArea();
     }
 
     public double getSide() {
@@ -32,12 +33,12 @@ public class Square implements TwoDimensional {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Square square = (Square) o;
-        return delegate.equals(square.delegate);
+        return delegateFor2Dimensional.equals(square.delegateFor2Dimensional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(delegate);
+        return Objects.hash(delegateFor2Dimensional);
     }
 
     @Override

@@ -6,26 +6,27 @@ import static nl.jhvh.java.geometry.GeometryUtil.RECTANGLE_DEGREES;
 
 public class Rectangle implements TwoDimensional {
 
-    private final Parallelogram delegate;
+    // Non-private and non-final for testability...
+    protected Parallelogram delegateFor2Dimensional;
 
     private final double width;
 
     private final double length;
 
     public Rectangle(double length, double width) {
-        this.delegate = new Parallelogram(length, width, RECTANGLE_DEGREES);
+        this.delegateFor2Dimensional = new Parallelogram(length, width, RECTANGLE_DEGREES);
         this.length = length;
         this.width = width;
     }
 
     @Override
     public double getCircumference() {
-        return delegate.getCircumference();
+        return delegateFor2Dimensional.getCircumference();
     }
 
     @Override
     public double getArea() {
-        return delegate.getArea();
+        return delegateFor2Dimensional.getArea();
     }
 
     public double getLength() {
@@ -41,12 +42,12 @@ public class Rectangle implements TwoDimensional {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rectangle rectangle = (Rectangle) o;
-        return delegate.equals(rectangle.delegate);
+        return delegateFor2Dimensional.equals(rectangle.delegateFor2Dimensional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(delegate);
+        return Objects.hash(delegateFor2Dimensional);
     }
 
     @Override
