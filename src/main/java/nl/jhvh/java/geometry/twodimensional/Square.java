@@ -4,8 +4,7 @@ import java.util.Objects;
 
 public class Square implements TwoDimensional {
 
-    // Non-private and non-final for testability...
-    protected Rectangle delegateFor2Dimensional;
+    private final Rectangle delegateFor2Dimensional;
 
     private final Double side;
 
