@@ -96,7 +96,7 @@ internal class RectangleTest {
     }
 
     @Test
-    fun `verify that side lengths are validated on construction`() {
+    fun `verify that side lengths are validated by delegate on construction`() {
         // We can't verify the validation call with a constructor mock,
         // so we do a simple test to prove that validation is done on construction of the Parallelogram delegate.
         unmockkConstructor(Parallelogram::class)
@@ -140,7 +140,7 @@ internal class RectangleTest {
 //        val amendedCopy1 = rectangle1.copy(width = width/5.0)
 //        assertThat(amendedCopy1).isNotEqualTo(rectangle1)
 //        assertThat(amendedCopy1.length).isEqualTo(rectangle1.length)
-//        assertThat(amendedCopy1.width).isCloseTo(width / 5.0, Assertions.offset(0.1))
+//        assertThat(amendedCopy1.width).isCloseTo(width / 5.0, offset(0.1))
 //
 //        // verify that the lazy attribute was not called
 //        verify (exactly = 0) { parallelogramDelegateMock.area }

@@ -23,94 +23,87 @@ internal class SquareTest {
     private var circumference = 0.0
     private var area = 0.0
 
-    private lateinit var parallelogramDelegateMock: Parallelogram
+    private lateinit var rectangleDelegateMock: Rectangle
 
     @BeforeAll
     fun setUpTest() {
         // Note that this mock will stay active until unmockkConstructor is called!
-        mockkConstructor(Parallelogram::class)
+        mockkConstructor(Rectangle::class)
 
-        every { anyConstructed<Parallelogram>().circumference } answers { circumference }
-        every { anyConstructed<Parallelogram>().area } answers { area }
+        every { anyConstructed<Rectangle>().circumference } answers { circumference }
+        every { anyConstructed<Rectangle>().area } answers { area }
 
-        parallelogramDelegateMock = Parallelogram(0.0, 0.0, 0.0)
+        rectangleDelegateMock = Rectangle(0.0, 0.0)
     }
 
     @AfterAll
     fun tearDownTest() {
         // Important!
-        unmockkConstructor(Parallelogram::class)
+        unmockkConstructor(Rectangle::class)
     }
 
     @BeforeEach
     fun setUp() {
         circumference = 0.0
         area = 0.0
-        clearMocks(parallelogramDelegateMock, answers = false, recordedCalls = true, verificationMarks = true)
+        clearMocks(rectangleDelegateMock, answers = false, recordedCalls = true, verificationMarks = true)
 
         // Note that this mock will stay active until unmockkConstructor is called!
-        mockkConstructor(Parallelogram::class)
+        mockkConstructor(Rectangle::class)
 
-        every { anyConstructed<Parallelogram>().circumference } answers { circumference }
-        every { anyConstructed<Parallelogram>().area } answers { area }
+        every { anyConstructed<Rectangle>().circumference } answers { circumference }
+        every { anyConstructed<Rectangle>().area } answers { area }
 
-        parallelogramDelegateMock = Parallelogram(0.0, 0.0, 0.0)
+        rectangleDelegateMock = Rectangle(0.0, 0.0)
     }
 
     @Test
-    fun getLength() {
+    fun getSide() {
         val square = Square(387.14)
         assertThat(square.side).isEqualTo(387.14)
-        confirmVerified(parallelogramDelegateMock)
+        confirmVerified(rectangleDelegateMock)
     }
 
     @Test
-    fun `test getArea and delegation to Parallelogram class`() {
+    fun `test getArea and delegation to Rectangle class`() {
         // given
         val square = Square(1.0)
         this.area = 380.2
         // when, then
         assertThat(square.area).isEqualTo(this.area)
         // verify that it was delegated
-        verify(exactly = 1) { parallelogramDelegateMock.area }
-        verify(exactly = 0) { parallelogramDelegateMock.circumference }
+        verify(exactly = 1) { rectangleDelegateMock.area }
+        verify(exactly = 0) { rectangleDelegateMock.circumference }
     }
 
     @Test
-    fun `test getCircumference and delegation to Parallelogram class`() {
+    fun `test getCircumference and delegation to Rectangle class`() {
         // given
         val square = Square(1.0)
         this.circumference = 203.87
         // when, then
         assertThat(square.circumference).isEqualTo(this.circumference)
         // verify that it was delegated
-        verify(exactly = 1) { parallelogramDelegateMock.circumference }
-        verify(exactly = 0) { parallelogramDelegateMock.area }
+        verify(exactly = 1) { rectangleDelegateMock.circumference }
+        verify(exactly = 0) { rectangleDelegateMock.area }
     }
 
     @Test
-    fun `verify that side lengths are validated on construction`() {
+    fun `verify that side lengths are validated by delegate on construction`() {
         // We can't verify the validation call with a constructor mock,
         // so we do a simple test to prove that validation is done on construction of the Rectangle delegate.
-        unmockkConstructor(Parallelogram::class)
+        unmockkConstructor(Rectangle::class)
 
         // OK
         Square(1.8)
-        // fails: any input < 0
+        // fails: side < 0
         val validationException: IllegalArgumentException = assertFailsWith { Square(-0.000001) }
 
         // Filter out calling classes (JUnit and test class) and anything called by Rectangle constructor,
         // so keeping only the part we are interested in
         val validationStackTrace = validationException.stackTrace
-                .dropWhile {
-                    it.className != Rectangle::class.java.name
-                            && it.className != Square::class.java.name
-                }
-                .takeWhile {
-                    it.className == Parallelogram::class.java.name
-                            || it.className == Rectangle::class.java.name
-                            || it.className == Square::class.java.name
-                }
+            .dropWhile { it.className != Rectangle::class.java.name && it.className != Square::class.java.name }
+            .takeWhile { it.className == Rectangle::class.java.name || it.className == Square::class.java.name }
         // println(validationStackTrace.joinToString(separator = "\n"))
 
         val squareConstructorCall = validationStackTrace.last()
@@ -126,6 +119,7 @@ internal class SquareTest {
         // So we can rely on the Rectangle constructor (and it's tests) for validation
     }
 
+    @Test
     @Disabled("No copy method in Java for data classes!")
     fun copy() {
         fail("No copy method in Java for data classes!")
@@ -151,11 +145,12 @@ internal class SquareTest {
         val square = Square(side)
         val str = square.toString()
         assertThat(str).contains(square.javaClass.simpleName, "side", "$side")
-        assertThat(str).doesNotContain("s1", "s2", "angleDegrees", "length", "width")  // should not use toString of delegate!
+        // should not use toString of delegate!
+        assertThat(str).doesNotContain("s1", "s2", "angleDegrees", "length", "width")
 
         // verify that the lazy attribute was not called
-        verify(exactly = 0) { parallelogramDelegateMock.area }
-        confirmVerified(parallelogramDelegateMock)
+        verify(exactly = 0) { rectangleDelegateMock.area }
+        confirmVerified(rectangleDelegateMock)
     }
 
     @Test
@@ -176,7 +171,7 @@ internal class SquareTest {
         assertThat(squareDifferent).isNotEqualTo(square1)
 
         // verify that the lazy attribute was not called
-        verify(exactly = 0) { parallelogramDelegateMock.area }
+        verify(exactly = 0) { rectangleDelegateMock.area }
     }
 
 }
