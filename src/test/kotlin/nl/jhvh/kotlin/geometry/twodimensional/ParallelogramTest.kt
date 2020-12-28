@@ -5,10 +5,12 @@ import io.mockk.spyk
 import io.mockk.verify
 import nl.jhvh.kotlin.geometry.radiansToDegrees
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.assertj.core.api.Assertions.offset
 import org.junit.jupiter.api.Test
 import kotlin.math.atan
 import kotlin.math.sin
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 internal class ParallelogramTest {
@@ -28,8 +30,22 @@ internal class ParallelogramTest {
         var s2 = 0.0
         val expectedMessage = { "Lengths of both sides must be positive, but sides s1 , s2 are $s1 , $s2" }
 
+        // Some assertions are done twice, just to compare syntax: one with kotlin.test assertion, and one with Assertj
+
+        // kotlin.test Assertions
         var message = assertFailsWith<IllegalArgumentException> { Parallelogram(s1, s2, 0.0) }
-                .message
+            .message
+        // kotlin.test Assertions
+        assertEquals(expectedMessage(), message)
+        // Often expected and actual are swapped accidentally, so better to use named notation when using Kotlin test:
+        assertEquals(expected = expectedMessage(), actual = message)
+
+        // AssertJ
+        assertThatThrownBy { Parallelogram(s1, s2, 0.0) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage(expectedMessage())
+
+        // AssertJ nicely avoids hassle of actual and expected, intuitively right here:
         assertThat(message).isEqualTo(expectedMessage())
 
         s1 = 50.0
@@ -61,7 +77,7 @@ internal class ParallelogramTest {
 
         // fails: angle < 0
         var angle = -0.00000000001
-        val expectedMessage = { "The angle of a parallelogram must be in range 0.0 and 90.0, but is $angle" }
+        val expectedMessage: () -> String = { "The angle of a parallelogram must be in range 0.0 and 90.0, but is $angle" }
 
         var message = assertFailsWith<IllegalArgumentException> { Parallelogram(1.0, 2.0, angle) }
                 .message
@@ -118,7 +134,7 @@ internal class ParallelogramTest {
 
         s1 = 20.0
         s2 = 10.0
-        angle = 0.0 // so in fact it's 2-dimensional
+        angle = 0.0 // so in fact it's 1-dimensional
         val parallelogram3 = Parallelogram(s1, s2, angle)
         assertThat(parallelogram3.width).isEqualTo(0.0) // because angle = 0 degrees (flat)
 
@@ -137,13 +153,13 @@ internal class ParallelogramTest {
 
         // verify lazy initialization
         // given
-        val spyk1 = spyk(parallelogram1, recordPrivateCalls = true)
-        verify (exactly = 0) { spyk1.width }
-        clearMocks(spyk1, verificationMarks = true, recordedCalls = true)
+        val spyk = spyk(parallelogram1, recordPrivateCalls = true)
+        verify (exactly = 0) { spyk.width }
+        clearMocks(spyk, verificationMarks = true, recordedCalls = true)
         // when
-        spyk1.width
+        spyk.width
         // then
-        verify (exactly = 1) { spyk1.width }
+        verify (exactly = 1) { spyk.width }
     }
 
     @Test
@@ -157,7 +173,7 @@ internal class ParallelogramTest {
 
         s1 = 8.453e12
         s2 = 4.8621e13
-        expectedCircumference = 2 * (s1 + s2)
+        expectedCircumference = 2.0 * (s1 + s2)
         angle = 66.45
         val parallelogram2 = Parallelogram(s1, s2, angle)
         assertThat(parallelogram2.circumference).isCloseTo(expectedCircumference, offset(1.0))
