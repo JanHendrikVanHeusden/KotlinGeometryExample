@@ -75,9 +75,17 @@ public class Parallelogram implements TwoDimensional {
     }
 
     private void validateInput() {
+        validateSideLengths();
+        validateAngle();
+    }
+
+    private void validateSideLengths() {
         if (this.s1 < 0.0 || s2 < 0.0) {
             throw new IllegalArgumentException("Lengths of both sides must be positive, but sides s1 , s2 are " + s1 + " , " + s2);
         }
+    }
+
+    private void validateAngle() {
         if (angleDegrees < MIN_ANGLE_DEGREES || angleDegrees > MAX_ANGLE_DEGREES) {
             throw new IllegalArgumentException("The angle of a parallelogram must be in range " + MIN_ANGLE_DEGREES + " and " + MAX_ANGLE_DEGREES + ", but is " + angleDegrees);
         }
