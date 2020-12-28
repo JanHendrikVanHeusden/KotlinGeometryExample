@@ -94,7 +94,7 @@ internal class SquareTest {
 
         // OK
         Square(1.8)
-        // fails: any input < 0
+        // fails: side < 0
         val validationException: IllegalArgumentException = assertFailsWith { Square(-0.000001) }
 
         // Filter out calling classes (JUnit and test class) and anything called by Rectangle constructor,
