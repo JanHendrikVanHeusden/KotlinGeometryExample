@@ -1,4 +1,4 @@
-package nl.jhvh.java.geometry.twodimensional
+package nl.jhvh.java.geometry.model.twodimensional
 
 import io.mockk.clearMocks
 import io.mockk.spyk
