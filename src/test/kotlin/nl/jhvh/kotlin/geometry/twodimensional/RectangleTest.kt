@@ -95,7 +95,7 @@ internal class RectangleTest {
     }
 
     @Test
-    fun `verify that side lengths are validated on construction`() {
+    fun `verify that side lengths are validated by delegate on construction`() {
         // We can't verify the validation call with a constructor mock,
         // so we do a simple test to prove that validation is done on construction of the Parallelogram delegate.
         unmockkConstructor(Parallelogram::class)

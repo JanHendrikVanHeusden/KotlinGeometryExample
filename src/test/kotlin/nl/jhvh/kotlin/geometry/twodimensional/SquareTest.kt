@@ -56,7 +56,7 @@ internal class SquareTest {
     }
 
     @Test
-    fun getLength() {
+    fun getSide() {
         val square = Square(387.14)
         assertThat(square.side).isEqualTo(387.14)
         confirmVerified(rectangleDelegateMock)
@@ -87,7 +87,7 @@ internal class SquareTest {
     }
 
     @Test
-    fun `verify that side lengths are validated on construction`() {
+    fun `verify that side lengths are validated by delegate on construction`() {
         // We can't verify the validation call with a constructor mock,
         // so we do a simple test to prove that validation is done on construction of the Rectangle delegate.
         unmockkConstructor(Rectangle::class)
