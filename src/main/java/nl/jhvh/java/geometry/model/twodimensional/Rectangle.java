@@ -2,7 +2,7 @@ package nl.jhvh.java.geometry.model.twodimensional;
 
 import java.util.Objects;
 
-import static nl.jhvh.java.geometry.GeometryUtil.RECTANGLE_DEGREES;
+import static nl.jhvh.java.geometry.util.GeometryUtil.RECTANGLE_DEGREES;
 
 public class Rectangle implements TwoDimensional {
 

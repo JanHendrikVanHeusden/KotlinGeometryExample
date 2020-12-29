@@ -8,8 +8,8 @@ import java.util.Objects;
 import static java.lang.Math.sin;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.m2ToSquareFeet;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.meterToFeet;
-import static nl.jhvh.java.geometry.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
-import static nl.jhvh.java.geometry.GeometryUtil.radiansToDegrees;
+import static nl.jhvh.java.geometry.util.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
+import static nl.jhvh.java.geometry.util.GeometryUtil.radiansToDegrees;
 
 public class Parallelogram implements TwoDimensional {
 

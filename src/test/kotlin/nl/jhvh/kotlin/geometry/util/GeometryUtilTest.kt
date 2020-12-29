@@ -1,4 +1,4 @@
-package nl.jhvh.kotlin.geometry
+package nl.jhvh.kotlin.geometry.util
 
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat

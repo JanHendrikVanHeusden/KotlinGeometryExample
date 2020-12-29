@@ -1,4 +1,4 @@
-package nl.jhvh.java.geometry;
+package nl.jhvh.java.geometry.util;
 
 import org.apache.commons.lang3.NotImplementedException;
 

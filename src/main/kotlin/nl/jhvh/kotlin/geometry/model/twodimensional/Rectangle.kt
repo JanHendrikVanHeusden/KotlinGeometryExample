@@ -1,6 +1,6 @@
 package nl.jhvh.kotlin.geometry.model.twodimensional
 
-import nl.jhvh.kotlin.geometry.rectangleDegrees
+import nl.jhvh.kotlin.geometry.util.rectangleDegrees
 import nl.jhvh.java.geometry.model.twodimensional.Rectangle as JavaRectangle
 
 data class Rectangle(val length: Double, val width: Double) : TwoDimensional by Parallelogram(length, width, rectangleDegrees)

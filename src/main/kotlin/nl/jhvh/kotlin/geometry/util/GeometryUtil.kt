@@ -3,7 +3,7 @@
  * For any real use, make sure to use the stuff from the `javax.measure` package instead !!
  */
 
-package nl.jhvh.kotlin.geometry
+package nl.jhvh.kotlin.geometry.util
 
 const val rectangleDegrees: Double = 90.0
 

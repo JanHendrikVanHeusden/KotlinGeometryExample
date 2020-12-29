@@ -1,10 +1,10 @@
-package nl.jhvh.java.geometry;
+package nl.jhvh.java.geometry.util;
 
 import org.junit.jupiter.api.Test;
 
-import static nl.jhvh.java.geometry.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
-import static nl.jhvh.java.geometry.GeometryUtil.RADIANS_TO_DEGREES_FACTOR;
-import static nl.jhvh.java.geometry.GeometryUtil.RECTANGLE_DEGREES;
+import static nl.jhvh.java.geometry.util.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
+import static nl.jhvh.java.geometry.util.GeometryUtil.RADIANS_TO_DEGREES_FACTOR;
+import static nl.jhvh.java.geometry.util.GeometryUtil.RECTANGLE_DEGREES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 

@@ -3,7 +3,7 @@ package nl.jhvh.kotlin.geometry.model.twodimensional
 import io.mockk.clearMocks
 import io.mockk.spyk
 import io.mockk.verify
-import nl.jhvh.kotlin.geometry.radiansToDegrees
+import nl.jhvh.kotlin.geometry.util.radiansToDegrees
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.assertj.core.api.Assertions.offset
