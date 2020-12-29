@@ -1,4 +1,4 @@
-package nl.jhvh.java.geometry.twodimensional;
+package nl.jhvh.java.geometry.model.twodimensional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

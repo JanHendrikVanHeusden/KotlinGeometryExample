@@ -1,4 +1,4 @@
-package nl.jhvh.java.geometry.twodimensional;
+package nl.jhvh.java.geometry.model.twodimensional;
 
 import nl.jhvh.java.geometry.GeometryUtil;
 import org.junit.jupiter.api.Disabled;
@@ -151,7 +151,7 @@ class ParallelogramTest {
 
         // verify lazy initialization
         // given
-        var spy = spy(parallelogram1);
+        var spy = Mockito.spy(parallelogram1);
         verify(spy, never()).getWidth();
         reset(spy);
         // when
@@ -183,7 +183,7 @@ class ParallelogramTest {
         var s1 = 8.5d;
         var s2 = 11.7d;
         var angleDegrees = 45.0d;
-        var spy = spy(new Parallelogram(s1, s2, angleDegrees));
+        var spy = Mockito.spy(new Parallelogram(s1, s2, angleDegrees));
 
         verify(spy, never()).getArea(); // attribute not initialized yet, because lazy
         reset(spy);
@@ -259,12 +259,12 @@ class ParallelogramTest {
     void equalsCallShouldNotCallLazyAttributes() {
         // given
         var parallelogram1 = new Parallelogram(10.0d, 15.0d, 25.0d);
-        var spy1 = spy(parallelogram1);
+        var spy1 = Mockito.spy(parallelogram1);
         verify(spy1, never()).getWidth();
         verify(spy1, never()).getArea();
 
         var parallelogram2 = new Parallelogram(10.0d, 15.0d, 25.0d);
-        var spy2 = spy(parallelogram2);
+        var spy2 = Mockito.spy(parallelogram2);
         verify(spy2, never()).getWidth();
         verify(spy2, never()).getArea();
         // when

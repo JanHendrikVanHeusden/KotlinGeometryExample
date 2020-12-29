@@ -1,4 +1,4 @@
-package nl.jhvh.kotlin.geometry.twodimensional
+package nl.jhvh.kotlin.geometry.model.twodimensional
 
 import io.mockk.clearMocks
 import io.mockk.spyk
