@@ -4,6 +4,8 @@ import nl.jhvh.kotlin.conversion.m2ToSquareFeet
 import nl.jhvh.kotlin.conversion.meterToFeet
 import nl.jhvh.kotlin.geometry.model.Dimensional
 import nl.jhvh.kotlin.geometry.model.Dimensional.twoDimensional
+import nl.jhvh.kotlin.geometry.model.GeometryType
+import nl.jhvh.kotlin.geometry.model.GeometryType.PARALLELOGRAM
 import nl.jhvh.kotlin.geometry.util.degreesToRadiansFactor
 import nl.jhvh.kotlin.geometry.util.radiansToDegrees
 import nl.jhvh.kotlin.util.logger
@@ -18,6 +20,10 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
     init {
         validateInput()
     }
+
+    override val dimensional: Dimensional = twoDimensional
+
+    override val geometryType: GeometryType = PARALLELOGRAM
 
     val angleRadians: Double = angleDegrees * degreesToRadiansFactor
     val length: Double = s1
@@ -35,8 +41,6 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
         logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.area" }
         s1 * width
     }
-
-    override val dimensional: Dimensional = twoDimensional
 
     private fun validateInput() {
         require(s1 >= 0.0 && s2 >= 0.0) { "Lengths of both sides must be positive, but sides s1 , s2 are $s1 , $s2" }

@@ -1,7 +1,10 @@
 package nl.jhvh.java.geometry.model.twodimensional;
 
+import nl.jhvh.java.geometry.model.GeometryType;
+
 import java.util.Objects;
 
+import static nl.jhvh.java.geometry.model.GeometryType.RECTANGLE;
 import static nl.jhvh.java.geometry.util.GeometryUtil.RECTANGLE_DEGREES;
 
 public class Rectangle implements TwoDimensional {
@@ -17,6 +20,11 @@ public class Rectangle implements TwoDimensional {
         this.delegateFor2Dimensional = new Parallelogram(length, width, RECTANGLE_DEGREES);
         this.length = length;
         this.width = width;
+    }
+
+    @Override
+    public GeometryType getGeometryType() {
+        return RECTANGLE;
     }
 
     @Override

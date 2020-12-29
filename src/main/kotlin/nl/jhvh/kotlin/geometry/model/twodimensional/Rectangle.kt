@@ -1,9 +1,13 @@
 package nl.jhvh.kotlin.geometry.model.twodimensional
 
+import nl.jhvh.kotlin.geometry.model.GeometryType
+import nl.jhvh.kotlin.geometry.model.GeometryType.RECTANGLE
 import nl.jhvh.kotlin.geometry.util.rectangleDegrees
 import nl.jhvh.java.geometry.model.twodimensional.Rectangle as JavaRectangle
 
-data class Rectangle(val length: Double, val width: Double) : TwoDimensional by Parallelogram(length, width, rectangleDegrees)
+data class Rectangle(val length: Double, val width: Double) : TwoDimensional by Parallelogram(length, width, rectangleDegrees) {
+    override val geometryType: GeometryType = RECTANGLE
+}
 
 fun main() {
     val rectangle = Rectangle(10.0, 20.0)

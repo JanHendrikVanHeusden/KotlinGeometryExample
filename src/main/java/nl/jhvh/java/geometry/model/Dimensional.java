@@ -13,9 +13,9 @@ public enum Dimensional {
 
     // dimensionCount must be unique
     // If not unique, mapping would fail with ExceptionInInitializerError - and that's what we want anyway !
-    // Caused by: java.lang.IllegalStateException: Duplicate key 3 (attempted merging values ... and ...)
+    // Caused by: java.lang.IllegalStateException: Duplicate key .. (attempted merging values ... and ...)
     private static final Map<Integer, Dimensional> dimensionMapper = Arrays.stream(values())
-            .collect(toMap(dimensional -> dimensional.dimensionCount, dimensional -> dimensional));
+            .collect(toMap(dm -> dm.dimensionCount, dm -> dm));
 
     public final int dimensionCount;
 

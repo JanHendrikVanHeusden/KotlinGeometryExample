@@ -1,6 +1,5 @@
 package nl.jhvh.kotlin.geometry.model.twodimensional
 
-import nl.jhvh.kotlin.geometry.model.Dimensional
 import nl.jhvh.kotlin.geometry.model.Geometry
 
 interface TwoDimensional: Geometry {

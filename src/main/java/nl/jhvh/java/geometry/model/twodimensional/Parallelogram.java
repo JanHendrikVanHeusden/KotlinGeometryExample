@@ -1,6 +1,7 @@
 package nl.jhvh.java.geometry.model.twodimensional;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import nl.jhvh.java.geometry.model.GeometryType;
 import nl.jhvh.java.util.Log;
 
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import static java.lang.Math.sin;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.m2ToSquareFeet;
 import static nl.jhvh.java.conversion.ImperialMetricConversion.meterToFeet;
+import static nl.jhvh.java.geometry.model.GeometryType.PARALLELOGRAM;
 import static nl.jhvh.java.geometry.util.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
 import static nl.jhvh.java.geometry.util.GeometryUtil.radiansToDegrees;
 
@@ -32,6 +34,11 @@ public class Parallelogram implements TwoDimensional {
         this.angleDegrees = angleDegrees;
         this.angleRadians = angleDegrees * DEGREES_TO_RADIANS_FACTOR;
         validateInput();
+    }
+
+    @Override
+    public GeometryType getGeometryType() {
+        return PARALLELOGRAM;
     }
 
     @Override

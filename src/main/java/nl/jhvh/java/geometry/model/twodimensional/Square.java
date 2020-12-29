@@ -1,6 +1,10 @@
 package nl.jhvh.java.geometry.model.twodimensional;
 
+import nl.jhvh.java.geometry.model.GeometryType;
+
 import java.util.Objects;
+
+import static nl.jhvh.java.geometry.model.GeometryType.SQUARE;
 
 public class Square implements TwoDimensional {
 
@@ -12,6 +16,11 @@ public class Square implements TwoDimensional {
     public Square(double side) {
         this.delegateFor2Dimensional = new Rectangle(side, side);
         this.side = side;
+    }
+
+    @Override
+    public GeometryType getGeometryType() {
+        return SQUARE;
     }
 
     @Override
