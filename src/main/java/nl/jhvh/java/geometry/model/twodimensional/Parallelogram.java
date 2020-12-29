@@ -1,4 +1,4 @@
-package nl.jhvh.java.geometry.twodimensional;
+package nl.jhvh.java.geometry.model.twodimensional;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import nl.jhvh.java.util.Log;
