@@ -92,33 +92,33 @@ internal class UtilTest {
         val lowValueCapturer: CapturingSlot<Double> = slot()
         val highValueCapturer: CapturingSlot<Double> = slot()
 
-        var capturedlowValue = 0.0
+        var capturedLowValue = 0.0
         var capturedHighValue = 0.0
         var diff = 0.0
 
         every { random.nextDouble(capture(lowValueCapturer), capture(highValueCapturer)) } answers {
-            capturedlowValue = lowValueCapturer.captured
+            capturedLowValue = lowValueCapturer.captured
             capturedHighValue = highValueCapturer.captured
-            diff = capturedHighValue - capturedlowValue
-            capturedlowValue
+            diff = capturedHighValue - capturedLowValue
+            capturedLowValue
         } andThen {
-            capturedlowValue + diff * 0.1
+            capturedLowValue + diff * 0.1
         } andThen {
-            capturedlowValue + diff * 0.2
+            capturedLowValue + diff * 0.2
         } andThen {
-            capturedlowValue + diff * 0.3
+            capturedLowValue + diff * 0.3
         } andThen {
-            capturedlowValue + diff * 0.4
+            capturedLowValue + diff * 0.4
         } andThen {
-            capturedlowValue + diff * 0.5
+            capturedLowValue + diff * 0.5
         } andThen {
-            capturedlowValue + diff * 0.6
+            capturedLowValue + diff * 0.6
         } andThen {
-            capturedlowValue + diff * 0.7
+            capturedLowValue + diff * 0.7
         } andThen {
-            capturedlowValue + diff * 0.8
+            capturedLowValue + diff * 0.8
         } andThen {
-            capturedlowValue + diff * 0.9
+            capturedLowValue + diff * 0.9
         } andThen {
             capturedHighValue
         }

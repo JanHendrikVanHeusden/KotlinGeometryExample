@@ -73,5 +73,5 @@ fun main() {
     val times3 = parallelogram * (3.0)
     println("Multiplied by 3 gives: $times3")
 
-    println("The total area of `$parallelogram` + and  = ${times3} is ${parallelogram + times3}")
+    println("The total area of `$parallelogram` + and  = $times3 is ${parallelogram + times3}")
 }

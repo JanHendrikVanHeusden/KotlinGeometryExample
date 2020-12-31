@@ -10,6 +10,7 @@ import static nl.jhvh.java.geometry.util.GeometryUtil.RECTANGLE_DEGREES;
 public class Rectangle implements TwoDimensional {
 
     // Non-private and non-final for testability...
+    @SuppressWarnings("CanBeFinal")
     protected Parallelogram delegateFor2Dimensional;
 
     private final double width;

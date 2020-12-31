@@ -41,7 +41,7 @@ This allows you to get an idea of the differences between the two.
 ##### Assertions
 For assertions, I personally prefer AssertJ to JUnit assertions (`org.junit.Assert`) and also to `kotlin.test` assertions.
 The AssertJ flow-style API works nicely and intuitively, with little chance to hassle *expected* and *actual* values
-(as happens often with the other ones). And AssertJ really has everything you need.
+(as often happens with the other ones). And AssertJ really has everything you need.
 > To get the idea, `kotlin.test` assertions are almost identical to JUnit assertions
 
 In order to give an idea of `kotlin.test` assertions, in class `ParallelogramTest` some assertions are done both with `kotlin.test`
@@ -63,11 +63,11 @@ Only a few changes had to be made to have the Java code called by the Kotlin tes
 > 
 
 #### Testing - summary
-* **You can use Kotlin tests to test your Java code, without issues;** it may have some handy benefits codewise, and it may also help getting used to Kotlin.
+* **You can use Kotlin tests to test your Java code, without issues;** it may have some handy benefits code-wise, and it may also help to get used to Kotlin.
     * If you really want, you can even write tests in Java to test your Kotlin classes if you accept some limitations; but that doesn't sound very rational.
 
 * **You can simply use Mockito in Kotlin tests if you prefer it over `mockk`**
-    * I have done that when I did not know `mockk` yet, it works well, but of course with some limitations for Kotlin specific goodies like coroutines or lambda-typed members).
+    * I have done that when I did not know `mockk` yet, it works well, but of course with some limitations for Kotlin specific goodies like coroutines or lambda-typed members.
   You can even mix `mockk` and Mockito in your project; but you better not mix `mockk` and Mockito in one test class: they don't interoperate!
 * **Assertion libraries (AssertJ, `org.junit.Assert`, `kotlin.test`) can be mixed even in the same class or method, without any inconvenience.**
     * `kotlin.test` only in tests written in Kotlin; the others both in Java and Kotlin

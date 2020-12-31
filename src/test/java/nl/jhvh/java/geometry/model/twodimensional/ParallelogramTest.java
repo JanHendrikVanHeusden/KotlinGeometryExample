@@ -28,6 +28,7 @@ class ParallelogramTest {
         return s1 * s2 * Math.sin(angleDegreesToRadians(degrees));
     }
 
+    @SuppressWarnings("CommentedOutCode")
     @Test
     void verifyThatSideLengthsAreValidatedOnConstruction() {
         // OK: all inputs 0
@@ -45,7 +46,9 @@ class ParallelogramTest {
 //                return ("Lengths of both sides must be positive, but sides s1 , s2 are " + s1 + " , " + s2);
 //            }
 //        };
-//        // OOPS!! DOES NOT COMPILE: local variables referenced from an inner class must be final or effectively final
+//
+//        >>> OOPS!! DOES NOT COMPILE: local variables referenced from an inner class must be final or effectively final
+//
 //        assertThatThrownBy(() -> { new Parallelogram(s1, s2, 0.0); })
 //                .isExactlyInstanceOf(IllegalArgumentException.class)
 //                .hasMessage(expectedMessage.get());
