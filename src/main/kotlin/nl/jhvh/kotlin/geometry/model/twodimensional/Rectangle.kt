@@ -5,15 +5,8 @@ import nl.jhvh.kotlin.geometry.model.GeometryType.RECTANGLE
 import nl.jhvh.kotlin.geometry.util.rectangleDegrees
 import nl.jhvh.java.geometry.model.twodimensional.Rectangle as JavaRectangle
 
-data class Rectangle(val length: Double, val width: Double)
-    : SizeableTwoDimensional<Rectangle>, TwoDimensional by Parallelogram(length, width, rectangleDegrees) {
-
+data class Rectangle(val length: Double, val width: Double) : TwoDimensional by Parallelogram(length, width, rectangleDegrees) {
     override val geometryType: GeometryType = RECTANGLE
-
-    override operator fun times(factor: Double): Rectangle = this.copy(length = this.length*factor, width = this.width*factor)
-    override operator fun times(factors: Pair<Double, Double>): Rectangle = this.copy(length = this.length*factors.first, width = this.width*factors.second)
-    override operator fun div(divisor: Double): Rectangle = this.copy(length = this.length/divisor, width = this.width/divisor)
-    override operator fun div(divisors: Pair<Double, Double>): Rectangle = this.copy(length = this.length/divisors.first, width = this.width/divisors.second)
 }
 
 fun main() {

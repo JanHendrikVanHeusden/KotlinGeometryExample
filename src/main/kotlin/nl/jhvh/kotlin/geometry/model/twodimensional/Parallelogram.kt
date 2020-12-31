@@ -15,8 +15,7 @@ import kotlin.math.sin
 private const val minAngleDegrees = 0.0
 private const val maxAngleDegrees = 90.0
 
-data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double)
-    : SizeableTwoDimensional<Parallelogram> {
+data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double) : TwoDimensional {
 
     init {
         validateInput()
@@ -48,16 +47,6 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
         require(angleDegrees in minAngleDegrees..maxAngleDegrees) { "The angle of a parallelogram must be in range $minAngleDegrees and $maxAngleDegrees, but is $angleDegrees" }
     }
 
-    override fun compareTo(other: TwoDimensional): Int = if (this == other || this.area == other.area) 0 else if (this.area > other.area) 1 else 0
-
-    override operator fun times(factor: Double): Parallelogram = this.copy(s1 = this.s1*factor, s2 = this.s2*factor)
-    override operator fun times(factors: Pair<Double, Double>): Parallelogram = this.copy(s1 = this.s1*factors.first, s2 = this.s2*factors.second)
-    override operator fun div(divisor: Double): Parallelogram = this.copy(s1 = this.s1/divisor, s2 = this.s2/divisor)
-    override operator fun div(divisors: Pair<Double, Double>): Parallelogram = this.copy(s1 = this.s1/divisors.first, s2 = this.s2/divisors.second)
-
-    override fun <T : TwoDimensional, S : TwoDimensional> T.plus(other: S): Double = this.area + other.area
-    override fun <T : TwoDimensional, S : TwoDimensional> T.minus(other: S): Double = this.area - other.area
-
 }
 
 fun main() {
@@ -69,9 +58,4 @@ fun main() {
     println("The $parallelogram has length ${parallelogram.length} and width ${parallelogram.width}")
     println("It's area is ${parallelogram.area} m2 (${parallelogram.area.m2ToSquareFeet()} square feet)")
     println("It's circumference is ${parallelogram.circumference} m (${parallelogram.circumference.meterToFeet()} feet)")
-
-    val times3 = parallelogram * (3.0)
-    println("Multiplied by 3 gives: $times3")
-
-    println("The total area of `$parallelogram` + and  = ${times3} is ${parallelogram + times3}")
 }
