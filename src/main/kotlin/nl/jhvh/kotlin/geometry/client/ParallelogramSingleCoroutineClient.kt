@@ -9,12 +9,12 @@ import nl.jhvh.kotlin.geometry.service.ParallelogramSpecifierByExample
 import nl.jhvh.kotlin.geometry.service.TwoDimensionalService
 import nl.jhvh.kotlin.util.logger
 
-class ParallelogramClient(val count: Int, val maxDelayMillis: Long) {
+class ParallelogramSingleCoroutineClient(val count: Int, val maxDelayMillis: Long) {
     val minBound = Parallelogram(0.0, 0.0, 0.0)
     val maxBound = Parallelogram(100.0, 100.0, 9.0)
     val spec = ParallelogramSpecifierByExample(minBound, maxBound, maxDelayMillis = this.maxDelayMillis)
 
-    val runBlocking = runBlocking {
+    fun runBlocking() = runBlocking {
 
         var ready = false
         println("1. Before print launcher\n")
@@ -41,7 +41,7 @@ class ParallelogramClient(val count: Int, val maxDelayMillis: Long) {
         // asynchronous, like execution of Java CompletableFuture.supplyAsync(), but in the same Thread as the caller
         var count = 0
         flow.collect { parallelogram ->
-            logger(ParallelogramClient::class.java).debug { "\nRetrieved #${++count} $parallelogram, Thread: ${Thread.currentThread().name}" }
+            logger(ParallelogramSingleCoroutineClient::class.java).debug { "\nRetrieved #${++count} $parallelogram, Thread: ${Thread.currentThread().name}" }
         }
         ready = true
 
@@ -59,6 +59,6 @@ fun main() {
     }
     println()
 
-    ParallelogramClient(count = 10, maxDelayMillis = 1000).runBlocking
+    ParallelogramSingleCoroutineClient(count = 10, maxDelayMillis = 1000).runBlocking()
     println("Everything ready !!!")
 }
