@@ -70,7 +70,7 @@ fun main() {
     println("It's area is ${parallelogram.area} m2 (${parallelogram.area.m2ToSquareFeet()} square feet)")
     println("It's circumference is ${parallelogram.circumference} m (${parallelogram.circumference.meterToFeet()} feet)")
 
-    val times3 = parallelogram * (3.0)
+    val times3 = parallelogram * 3.0
     println("Multiplied by 3 gives: $times3")
 
     println("The total area of `$parallelogram` + and  = $times3 is ${parallelogram + times3}")
