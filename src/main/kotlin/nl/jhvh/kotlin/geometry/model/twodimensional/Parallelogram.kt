@@ -47,6 +47,7 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
         require(angleDegrees in minAngleDegrees..maxAngleDegrees) { "The angle of a parallelogram must be in range $minAngleDegrees and $maxAngleDegrees, but is $angleDegrees" }
     }
 
+    override fun compareTo(other: TwoDimensional): Int = if (this == other || this.area == other.area) 0 else if (this.area > other.area) 1 else 0
 }
 
 fun main() {

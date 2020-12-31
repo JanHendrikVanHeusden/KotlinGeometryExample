@@ -35,4 +35,11 @@ fun main() {
 
     areKotlinAndJavaRectangleEqual = javaRectangle.equals(rectangle)
     println("Are the rectangles $javaRectangle (Java) and $rectangle (Kotlin) equal? $areKotlinAndJavaRectangleEqual")
+
+    println()
+    println()
+    val smallParallelogram = Parallelogram(1.0, 1.0, 35.0)
+    val largerSquare = Square(16.8)
+    val isBigger = largerSquare > smallParallelogram
+    println(("'$largerSquare' is larger than '$smallParallelogram'? -> $isBigger"))
 }
