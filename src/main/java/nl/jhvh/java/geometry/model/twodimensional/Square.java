@@ -9,6 +9,7 @@ import static nl.jhvh.java.geometry.model.GeometryType.SQUARE;
 public class Square implements TwoDimensional {
 
     // Non-private and non-final for testability...
+    @SuppressWarnings("CanBeFinal")
     protected Rectangle delegateFor2Dimensional;
 
     private final Double side;

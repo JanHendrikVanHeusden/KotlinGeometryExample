@@ -107,6 +107,7 @@ class SquareTest {
     }
 
     @Disabled("No copy method in Java for data classes!")
+    @Test
     void copy() {
         fail("No copy method in Java for data classes!");
 //        val side = 8.453e8

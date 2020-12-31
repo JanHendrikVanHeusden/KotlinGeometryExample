@@ -1,6 +1,6 @@
 package nl.jhvh.kotlin.geometry.model.twodimensional
 
-import io.mockk.clearMocks
+import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockkConstructor
@@ -44,7 +44,7 @@ internal class SquareTest {
     fun setUp() {
         circumference = 0.0
         area = 0.0
-        clearMocks(rectangleDelegateMock, answers = false, recordedCalls = true, verificationMarks = true)
+        clearAllMocks(answers = false, recordedCalls = true)
 
         // Note that this mock will stay active until unmockkConstructor is called!
         mockkConstructor(Rectangle::class)
