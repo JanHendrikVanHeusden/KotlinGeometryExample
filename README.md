@@ -34,7 +34,9 @@ Package `nl.jhvh.kotlin.geometry.client.concurrent` gives examples of achieving 
 ![Image "Concurrency vs. parallelism"](images/Concurrency vs Parallelism small.png?raw=true "Concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
 ![Image "Real world concurrency vs. parallelism"](images/Real world concurrency vs Real world parallelism with comments small.png?raw=true "Real world concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
 
-> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism.
+> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism
+> 
+> *Article Copyright 2018 by Shivprasad koirala, licensed under [The Code Project Open License (CPOL)](http://www.codeproject.com/info/cpol10.aspx)*
 
 ### Mocking & assertions
 ##### Mocking
