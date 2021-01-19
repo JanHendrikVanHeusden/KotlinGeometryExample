@@ -27,6 +27,15 @@ Like the source code, the tests are also divided in 2 separate root directories:
     * These tests are written in Java.
       *At least, in the `main` branch! See below for more*.
 
+## Coroutines / concurrency
+Package `nl.jhvh.kotlin.geometry.client.concurrent` gives examples of achieving concurrency without parallelism, by means of coroutines.
+
+#### Concurrent vs. parallel?
+![Image "Concurrency vs. parallelism"](images/Concurrency vs Parallelism small.png?raw=true "Concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
+![Image "Real world concurrency vs. parallelism"](images/Real world concurrency vs Real world parallelism with comments small.png?raw=true "Real world concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
+
+> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism.
+
 ### Mocking & assertions
 ##### Mocking
 In the `main` branch, the tests use the typical mocking libraries that you expect for each language:

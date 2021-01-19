@@ -24,7 +24,8 @@ infix fun Double.doubleUntil(to: Double): ClosedRange<Double> {
     }
 }
 
-fun ClosedRange<Double>.randomInRange(random: Random = Random(System.currentTimeMillis())): Double {
+fun ClosedRange<Double>.randomInRange(random: Random? = null): Double {
     check(!this.isEmpty()) {"Can't generate a random Double, $this is empty!"}
-    return if (this.start == this.endInclusive) this.start else random.nextDouble(start, endInclusive)
+    val randomToUse = random?:Random
+    return if (this.start == this.endInclusive) this.start else randomToUse.nextDouble(start, endInclusive)
 }

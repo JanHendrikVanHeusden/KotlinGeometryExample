@@ -11,83 +11,107 @@ import nl.jhvh.kotlin.util.randomInRange
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
-sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(open val example1: T, open val example2: T) :
-    TwoDimensionalSpecifier<T> {
-    val random = Random(System.currentTimeMillis())
+@ExperimentalTime
+interface TwoDimensionalSpecifier<T : TwoDimensional> {
+    fun predicate(toTest: T): Boolean
+    suspend fun generateWithDelay(): T
+    val maxDelayMillis: Long
+    fun duration(): Duration
 }
 
+@ExperimentalTime
+sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(
+    open val example1: T,
+    open val example2: T,
+    final override val maxDelayMillis: Long = 0L
+) : TwoDimensionalSpecifier<T> {
+
+    private val random = Random(System.currentTimeMillis())
+
+    @Volatile
+    private var duration: Duration = Duration.ZERO
+    final override fun duration() = duration
+
+    final override suspend fun generateWithDelay(): T =  run {
+        val (result: T, elapsed: Duration) = measureTimedValue {
+            delay(random.nextLong(0L, maxDelayMillis))
+            generateToSpec()
+        }
+        duration = duration.plus(elapsed)
+        result
+    }
+
+    protected abstract fun generateToSpec(): T
+}
+
+@ExperimentalTime
 class ParallelogramSpecifierByExample(
     override val example1: Parallelogram,
     override val example2: Parallelogram,
-    override val maxDelayMillis: Long = 0L
-) : TwoDimensionalSpecifierByExample<Parallelogram>(example1, example2) {
+    maxDelayMillis: Long = 0L
+) : TwoDimensionalSpecifierByExample<Parallelogram>(example1, example2, maxDelayMillis) {
 
     constructor(example: Parallelogram) : this(example, example)
 
     // `doubleUntil` is a home grown method, defined the same way as the built-in Int.until method!
     // We can neither use the .. operator (does not include the start value), nor Double.until, the Kotlin folks did not implement that (yet)
-    val s1Range = min(example1.s1, example2.s1) doubleUntil max(example1.s1, example2.s1)
-    val s2Range: ClosedRange<Double> = min(example1.s2, example2.s2) doubleUntil max(example1.s2, example2.s2)
-    val angleDegreesRange =
+    private val s1Range = min(example1.s1, example2.s1) doubleUntil max(example1.s1, example2.s1)
+    private val s2Range: ClosedRange<Double> = min(example1.s2, example2.s2) doubleUntil max(example1.s2, example2.s2)
+    private val angleDegreesRange =
         min(example1.angleDegrees, example2.angleDegrees) doubleUntil max(example1.angleDegrees, example2.angleDegrees)
 
     override fun predicate(toTest: Parallelogram) =
         toTest.s1 in s1Range && toTest.s2 in s2Range && toTest.angleDegrees in angleDegreesRange
 
-    override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
-        logger().debug { "\nGenerating ${Parallelogram::class.java.simpleName} from ${Thread.currentThread().name}" }
-        Parallelogram(s1Range.randomInRange(), s2Range.randomInRange(), angleDegreesRange.randomInRange())
-    }
+    override fun generateToSpec() =
+        let { Parallelogram(s1Range.randomInRange(), s2Range.randomInRange(), angleDegreesRange.randomInRange()) }
+            .also { logger().debug { "\nGenerating $it" } }
 
 }
 
+@ExperimentalTime
 class RectangleSpecifierByExample(
     override val example1: Rectangle,
     override val example2: Rectangle,
-    override val maxDelayMillis: Long = 0L
-) : TwoDimensionalSpecifierByExample<Rectangle>(example1, example2) {
+    maxDelayMillis: Long = 0L
+) : TwoDimensionalSpecifierByExample<Rectangle>(example1, example2, maxDelayMillis,) {
 
     constructor(example: Rectangle) : this(example, example)
 
     // `doubleUntil` is a home grown method, defined the same way as the built-in Int.until method!
     // We can neither use the .. operator (does not include the start value), nor Double.until, the Kotlin folks did not implement that (yet)
-    val lengthRange: ClosedRange<Double> =
+    private val lengthRange: ClosedRange<Double> =
         min(example1.length, example2.length) doubleUntil max(example1.length, example2.length)
-    val widthRange: ClosedRange<Double> =
+    private val widthRange: ClosedRange<Double> =
         min(example1.width, example2.width) doubleUntil max(example1.width, example2.width)
 
     override fun predicate(toTest: Rectangle) = toTest.length in lengthRange && toTest.width in widthRange
 
-    override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
-        logger().debug { "\nGenerating ${Rectangle::class.java.simpleName} from ${Thread.currentThread().name}" }
-        Rectangle(lengthRange.randomInRange(), widthRange.randomInRange())
-    }
+    override fun generateToSpec() =
+        let {
+            Rectangle(lengthRange.randomInRange(), widthRange.randomInRange())
+        }
+            .also { logger().debug { "\nGenerating $it" } }
 }
 
+@ExperimentalTime
 class SquareSpecifierByExample(
     override val example1: Square,
     override val example2: Square,
-    override val maxDelayMillis: Long = 0L
-) : TwoDimensionalSpecifierByExample<Square>(example1, example2) {
+    maxDelayMillis: Long = 0L
+) : TwoDimensionalSpecifierByExample<Square>(example1, example2, maxDelayMillis,) {
 
     constructor(example: Square) : this(example, example)
 
-    val sideRange = min(example1.side, example2.side) doubleUntil max(example1.side, example2.side)
+    private val sideRange = min(example1.side, example2.side) doubleUntil max(example1.side, example2.side)
 
     override fun predicate(toTest: Square) = toTest.side in sideRange
 
-    override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
-        logger().debug { "g\nGenerating ${Square::class.java.simpleName} from ${Thread.currentThread().name}" }
-        Square(sideRange.randomInRange())
-    }
-}
-
-interface TwoDimensionalSpecifier<T : TwoDimensional> {
-    fun predicate(toTest: T): Boolean
-    val generateToSpec: suspend () -> T
-    val maxDelayMillis: Long
+    override fun generateToSpec() =
+        let { Square(sideRange.randomInRange()) }
+            .also { logger().debug { "g\nGenerating $it" } }
 }

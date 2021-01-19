@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
 
+
 internal class UtilTest {
 
     @Test
@@ -24,13 +25,13 @@ internal class UtilTest {
         assertThat((2.0 + 1e-15) in range).isFalse
         assertThat(-1.2 in range).isFalse
 
-        assertThat (Double.NaN in range).isFalse
+        assertThat(Double.NaN in range).isFalse
 
-        assertThat (Double.NEGATIVE_INFINITY in range).isFalse
-        assertThat (Double.POSITIVE_INFINITY in range).isFalse
+        assertThat(Double.NEGATIVE_INFINITY in range).isFalse
+        assertThat(Double.POSITIVE_INFINITY in range).isFalse
 
-        assertThat (Double.MIN_VALUE in range).isFalse
-        assertThat (Double.MAX_VALUE in range).isFalse
+        assertThat(Double.MIN_VALUE in range).isFalse
+        assertThat(Double.MAX_VALUE in range).isFalse
 
         range = 0.0 doubleUntil 0.0
         assertThat(range.isEmpty()).isFalse // because both boundaries included
@@ -86,7 +87,7 @@ internal class UtilTest {
 
     @Test
     fun `test randomInRange with mocked Random`() {
-        val random = mockk<Random>()
+        val random: Random = mockk()
         val range = 0.0 doubleUntil 10.0
 
         val lowValueCapturer: CapturingSlot<Double> = slot()
