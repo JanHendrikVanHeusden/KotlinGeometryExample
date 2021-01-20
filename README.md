@@ -30,12 +30,16 @@ Like the source code, the tests are also divided in 2 separate root directories:
 ## Coroutines / concurrency
 Package `nl.jhvh.kotlin.geometry.client.concurrent` gives examples of achieving concurrency without parallelism, by means of coroutines.
 
-#### Concurrent vs. parallel?
-![Image "Concurrency vs. parallelism"](./images/Concurrency-vs-Parallelism-small.png "Concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
-![Image "Real world concurrency vs. parallelism"](./images/Real-world-concurrency-vs-Real-world-parallelism-with-comments-small.png "Real world concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism")
-
-> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism
+> #### Concurrent vs. parallel
+> * Parallel is always concurrent; but concurrent is not necessarily parallel.
+> * Think of Javascript which always operate single threaded (so not parallel) in your browser, but still allow asynchronous (concurrent) operations
+> * Coroutines in Kotlin allow to have work done concurrency, but not inherently parallel (but parallel is possible too when running in a JVM or other multi-threaded environment).
 > 
+> | Computers | Human world |
+> |-----------|-------------|
+> | ![Image "Concurrency vs. parallelism"](./images/Concurrency-vs-Parallelism-small.png "Concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism") | ![Image "Real world concurrency vs. parallelism"](./images/Real-world-concurrency-vs-Real-world-parallelism-with-comments-small.png "Real world concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism") |
+>
+> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism.
 > *Article Copyright 2018 by Shivprasad koirala, licensed under [The Code Project Open License (CPOL)](http://www.codeproject.com/info/cpol10.aspx)*
 
 ### Mocking & assertions
