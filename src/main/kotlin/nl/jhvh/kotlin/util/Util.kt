@@ -1,6 +1,18 @@
 package nl.jhvh.kotlin.util
 
+import kotlinx.coroutines.delay
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
+import java.time.temporal.Temporal
+import java.time.temporal.TemporalUnit
 import kotlin.random.Random
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
 
 // Can not use the `..` operator (does not include lower bound; so 1.0..7.0 does not include 1.0).
 // Neither can we use `until` (like in `0 until 5`): the Kotlin folks did not implement that for Float or Double
@@ -29,3 +41,18 @@ fun ClosedRange<Double>.randomInRange(random: Random? = null): Double {
     val randomToUse = random?:Random
     return if (this.start == this.endInclusive) this.start else randomToUse.nextDouble(start, endInclusive)
 }
+
+@ExperimentalTime
+infix operator fun Temporal.minus(other: Temporal): Duration =
+    other.until(this, ChronoUnit.NANOS)
+        .toDuration(DurationUnit.NANOSECONDS)
+
+
+@ExperimentalTime
+infix operator fun LocalDateTime.minus(other: LocalDateTime): Duration =
+    other.until(this, ChronoUnit.NANOS)
+        .toDuration(DurationUnit.NANOSECONDS)
+
+@ExperimentalTime
+infix operator fun ZonedDateTime.minus(other: ZonedDateTime): Duration =
+    this.toInstant() - other.toInstant()
