@@ -1,13 +1,7 @@
 package nl.jhvh.kotlin.util
 
-import kotlinx.coroutines.delay
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
-import java.time.temporal.Temporal
-import java.time.temporal.TemporalUnit
 import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -30,29 +24,28 @@ import kotlin.time.toDuration
 // DELIBERATELY NOT USING THE NAME "until", THAT WOULD BREAK AS SOON AS KOTLIN WOULD INTRODUCE A NATIVE Double.until
 infix fun Double.doubleUntil(to: Double): ClosedRange<Double> {
     val thisDouble = this
-    return object: ClosedRange<Double> {
+    return object : ClosedRange<Double> {
         override val endInclusive = to
         override val start = thisDouble
     }
 }
 
 fun ClosedRange<Double>.randomInRange(random: Random? = null): Double {
-    check(!this.isEmpty()) {"Can't generate a random Double, $this is empty!"}
-    val randomToUse = random?:Random
+    check(!this.isEmpty()) { "Can't generate a random Double, $this is empty!" }
+    val randomToUse = random ?: Random
     return if (this.start == this.endInclusive) this.start else randomToUse.nextDouble(start, endInclusive)
 }
 
 @ExperimentalTime
-infix operator fun Temporal.minus(other: Temporal): Duration =
-    other.until(this, ChronoUnit.NANOS)
-        .toDuration(DurationUnit.NANOSECONDS)
-
-
-@ExperimentalTime
-infix operator fun LocalDateTime.minus(other: LocalDateTime): Duration =
-    other.until(this, ChronoUnit.NANOS)
-        .toDuration(DurationUnit.NANOSECONDS)
-
-@ExperimentalTime
-infix operator fun ZonedDateTime.minus(other: ZonedDateTime): Duration =
-    this.toInstant() - other.toInstant()
+infix operator fun LocalDateTime.minus(other: LocalDateTime): Duration {
+    return try {
+        val duration = other.until(this, ChronoUnit.NANOS)
+            .toDuration(DurationUnit.NANOSECONDS)
+        duration
+    } catch (ae: ArithmeticException) {
+        // long overflow when diff is more than about 292 years,
+        // switch to milliseconds, allows for 292000 years; hopefully that's enough!
+        other.until(this, ChronoUnit.MILLIS)
+            .toDuration(DurationUnit.MILLISECONDS)
+    }
+}
