@@ -17,6 +17,10 @@ fun main() {
     println("Object is Any: $objectIsAny")
     println("Object is Object: $objectIsObject")
 
-    ref.anObject.notify()
+    try {
+        ref.anObject.notifyAll()
+    } catch (e: IllegalMonitorStateException) {
+        println("Just showing that it compiles, but don't do this!")
+    }
     // ref.any.notify() // Does not compile
 }
