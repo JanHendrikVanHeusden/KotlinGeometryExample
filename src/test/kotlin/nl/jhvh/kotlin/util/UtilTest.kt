@@ -5,8 +5,13 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.data.Offset
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 import kotlin.random.Random
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.toDuration
 
 internal class UtilTest {
 
@@ -126,6 +131,33 @@ internal class UtilTest {
         for (x in 0..10) {
             assertThat(range.randomInRange(random)).isEqualTo(x.toDouble())
         }
+    }
+
+    @ExperimentalTime
+    @Test
+    fun `test diff between LocalDateTime values`() {
+        val now = LocalDateTime.now()
+
+        assertThat(now.plusDays(1L).plusHours(3) - now ).isEqualTo(27.toDuration(DurationUnit.HOURS))
+
+        // test with various random diff values
+        for (x in 1..1000) {
+            // diff values roughly -292 to +292 years
+            val nanosDiff = Random.nextLong()
+            val t2 = now.plusNanos(nanosDiff)
+            assertThat(t2 - now).isEqualTo(nanosDiff.toDuration(DurationUnit.NANOSECONDS))
+        }
+        // Long.MAX_VALUE / Long.MIN_VALUE represent +/- 292 years, which is about 106751.991 days
+        assertThat((now.plusNanos(Long.MAX_VALUE) - now).inDays).isCloseTo(106751.991, Offset.offset(0.001))
+        assertThat((now.minusNanos(Long.MAX_VALUE) - now).inDays).isCloseTo(-106751.991, Offset.offset(0.001))
+        assertThat((now.plusNanos(Long.MIN_VALUE) - now).inDays).isCloseTo(-106751.991, Offset.offset(0.001))
+        assertThat((now.minusNanos(Long.MIN_VALUE) - now).inDays).isCloseTo(106751.991, Offset.offset(0.001))
+
+        // No overflow / underflow with value > MAX_VALUE or value < MIN_VALUE
+        val veryLongAgo = now.minusNanos(Long.MAX_VALUE).minusNanos(Long.MAX_VALUE)
+        assertThat((now-veryLongAgo).inDays).isCloseTo(213503.982, Offset.offset(0.001))
+        val veryLongAhead = now.plusNanos(Long.MAX_VALUE).plusNanos(Long.MAX_VALUE)
+        assertThat((veryLongAhead-now).inDays).isCloseTo(213503.982, Offset.offset(0.001))
     }
 
 }
