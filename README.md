@@ -82,7 +82,8 @@ Package `nl.jhvh.kotlin.geometry.client.concurrent` gives examples of achieving 
 > #### Concurrent vs. parallel
 > * Parallel is always concurrent; but concurrent is not necessarily parallel.
 > * Think of Javascript which always operates single threaded (so not parallel) in your browser, but still allow asynchronous (concurrent) operations
-> * Coroutines in Kotlin allow to have work done concurrency, but not inherently parallel (but parallel is possible too when running in a JVM or other multi-threaded environment).
+> * Coroutines in Kotlin allow to have work done concurrency, but not inherently parallel
+>    * But parallel operation is possible with coroutines when running in a JVM or other multi-threaded environment.
 >
 > | Computers | Human world |
 > |-----------|-------------|
