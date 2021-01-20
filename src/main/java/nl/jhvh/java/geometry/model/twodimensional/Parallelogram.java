@@ -57,14 +57,11 @@ public class Parallelogram implements TwoDimensional {
     public double getWidth() {
         // Pretending that it's a very costly operation, so lazy initialization
 
-        // Theoretically it would require synchronization to avoid multiple initialization; but the outcome will
-        // be the same in either case. So not synchronizing it won't cause trouble, except the performance penalty
-        // of being initialized more than once.
+        // Theoretically it would require synchronization; but as the outcome will be the same in either case.
+        // So it won't cause trouble, unless the performance penalty of being initialized is considerably higher
+        // than the performance penalty of synchronizing the getWidth() method.
         //
-        // If that penalty of initializing more than once would be considerably higher than the performance penalty
-        // of synchronizing the getWidth() method, one could synchronize the method; or double checked locking idiom
-        // could be used, if it's worth the additional complexity and discussion.
-        //
+        // If synchronization were really really needed, double checked locking idiom could be used
         // NB: that DOES work since JDK5, see https://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html,
         //     section "Fixing Double-Checked Locking using Volatile"
         if (width == null) {
