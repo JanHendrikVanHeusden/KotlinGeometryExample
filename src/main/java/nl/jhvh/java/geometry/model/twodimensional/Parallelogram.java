@@ -1,6 +1,5 @@
 package nl.jhvh.java.geometry.model.twodimensional;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import nl.jhvh.java.geometry.model.GeometryType;
 import nl.jhvh.java.util.Log;
 
@@ -24,8 +23,7 @@ public class Parallelogram implements TwoDimensional {
     private final double angleDegrees;
     private final double length;
 
-    // Needs to be Guava AtomicDouble in order to be thread safe (Java has no AtomicDouble)
-    private AtomicDouble width = null;
+    private Double width = null;
 
     public Parallelogram(double s1, double s2, double angleDegrees) {
         this.s1 = s1;
@@ -58,11 +56,19 @@ public class Parallelogram implements TwoDimensional {
 
     public double getWidth() {
         // Pretending that it's a very costly operation, so lazy initialization
+
+        // Theoretically it would require synchronization; but as the outcome will be the same in either case.
+        // So it won't cause trouble, unless the performance penalty of being initialized is considerably higher
+        // than the performance penalty of synchronizing the getWidth() method.
+        //
+        // If synchronization were really really needed, double checked locking idiom could be used
+        // NB: that DOES work since JDK5, see https://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html,
+        //     section "Fixing Double-Checked Locking using Volatile"
         if (width == null) {
             Log.logger(this.getClass()).debug("Lazy initialization of " + this.getClass().getSimpleName() + ".width");
-            width = new AtomicDouble(s2 * sin(angleRadians));
+            width = s2 * sin(angleRadians);
         }
-        return width.doubleValue();
+        return width;
     }
 
     public double getS1() {

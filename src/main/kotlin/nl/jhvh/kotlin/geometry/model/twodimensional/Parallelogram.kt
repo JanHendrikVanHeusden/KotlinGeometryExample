@@ -29,6 +29,7 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
     val length: Double = s1
 
     // pretend that it's a heavy initialization, so lazy
+    // NB: default lazy() initialization mode = LazyThreadSafetyMode.SYNCHRONIZED.
     val width: Double by lazy {
         logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.width" }
         s2 * sin(angleRadians)
