@@ -19,6 +19,7 @@ import kotlin.time.measureTimedValue
 interface TwoDimensionalSpecifier<T : TwoDimensional> {
     fun predicate(toTest: T): Boolean
     suspend fun generateWithDelay(): T
+    fun generateToSpec(): T
     val maxDelayMillis: Long
     fun duration(): Duration
 }
@@ -38,14 +39,15 @@ sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(
 
     final override suspend fun generateWithDelay(): T =  run {
         val (result: T, elapsed: Duration) = measureTimedValue {
-            delay(random.nextLong(0L, maxDelayMillis))
+            if (maxDelayMillis > 0L) {
+                delay(random.nextLong(0L, maxDelayMillis))
+            }
             generateToSpec()
         }
         duration = duration.plus(elapsed)
         result
     }
 
-    protected abstract fun generateToSpec(): T
 }
 
 @ExperimentalTime
@@ -113,5 +115,5 @@ class SquareSpecifierByExample(
 
     override fun generateToSpec() =
         let { Square(sideRange.randomInRange()) }
-            .also { logger().debug { "g\nGenerating $it" } }
+            .also { logger().debug { "\nGenerating $it" } }
 }
