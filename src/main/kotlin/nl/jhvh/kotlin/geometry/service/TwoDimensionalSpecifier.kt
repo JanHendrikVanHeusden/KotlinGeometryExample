@@ -31,8 +31,6 @@ sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(
     final override val maxDelayMillis: Long = 0L
 ) : TwoDimensionalSpecifier<T> {
 
-    private val random = Random(System.currentTimeMillis())
-
     @Volatile
     private var duration: Duration = Duration.ZERO
     final override fun duration() = duration
@@ -40,7 +38,7 @@ sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(
     final override suspend fun generateWithDelay(): T =  run {
         val (result: T, elapsed: Duration) = measureTimedValue {
             if (maxDelayMillis > 0L) {
-                delay(random.nextLong(0L, maxDelayMillis))
+                delay(Random.nextLong(0L, maxDelayMillis))
             }
             generateToSpec()
         }
