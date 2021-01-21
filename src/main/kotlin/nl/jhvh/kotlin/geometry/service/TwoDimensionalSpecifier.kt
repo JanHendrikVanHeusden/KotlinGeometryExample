@@ -13,9 +13,7 @@ import kotlin.math.min
 import kotlin.random.Random
 
 sealed class TwoDimensionalSpecifierByExample<T : TwoDimensional>(open val example1: T, open val example2: T) :
-    TwoDimensionalSpecifier<T> {
-    val random = Random(System.currentTimeMillis())
-}
+    TwoDimensionalSpecifier<T>
 
 class ParallelogramSpecifierByExample(
     override val example1: Parallelogram,
@@ -36,7 +34,7 @@ class ParallelogramSpecifierByExample(
         toTest.s1 in s1Range && toTest.s2 in s2Range && toTest.angleDegrees in angleDegreesRange
 
     override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
+        delay(Random.nextLong(0L, maxDelayMillis))
         logger().debug { "\nGenerating ${Parallelogram::class.java.simpleName} from ${Thread.currentThread().name}" }
         Parallelogram(s1Range.randomInRange(), s2Range.randomInRange(), angleDegreesRange.randomInRange())
     }
@@ -61,7 +59,7 @@ class RectangleSpecifierByExample(
     override fun predicate(toTest: Rectangle) = toTest.length in lengthRange && toTest.width in widthRange
 
     override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
+        delay(Random.nextLong(0L, maxDelayMillis))
         logger().debug { "\nGenerating ${Rectangle::class.java.simpleName} from ${Thread.currentThread().name}" }
         Rectangle(lengthRange.randomInRange(), widthRange.randomInRange())
     }
@@ -80,7 +78,7 @@ class SquareSpecifierByExample(
     override fun predicate(toTest: Square) = toTest.side in sideRange
 
     override val generateToSpec = suspend {
-        delay(random.nextLong(0L, maxDelayMillis))
+        delay(Random.nextLong(0L, maxDelayMillis))
         logger().debug { "g\nGenerating ${Square::class.java.simpleName} from ${Thread.currentThread().name}" }
         Square(sideRange.randomInRange())
     }
