@@ -70,6 +70,7 @@ private const val iterationCount = 100
  * and collected.
  *
  * This is due to the fact that the coroutine runs in the same context as the generation of the [TwoDimensional].
+ * Google "Structured concurrency" to find more about this!
  */
 @ExperimentalCoroutinesApi
 @ExperimentalTime
