@@ -65,12 +65,12 @@ private const val iterationCount = 100
  *
  * The [TwoDimensionalRepository.getData] method shows (among others) that coroutines can be
  * effectively cancelled by a timeout (or by another event): If a timeout occurs (seen as a `WARN` message
- * in the logging, no [TwoDimensional] is generated or collected anymore;
- * and on the other hand, if [TwoDimensionalRepository.getData] does NOT time out, the [TwoDimensional] is generated
+ * in the logging, no [TwoDimensional] is generated or collected anymore.
+ * And on the other hand, if [TwoDimensionalRepository.getData] does NOT time out, the [TwoDimensional] is generated
  * and collected.
  *
  * This is due to the fact that the coroutine runs in the same context as the generation of the [TwoDimensional].
- * Google "Structured concurrency" to find more about this!
+ * Query Google on "Structured concurrency" to find out more!
  */
 @ExperimentalCoroutinesApi
 @ExperimentalTime
