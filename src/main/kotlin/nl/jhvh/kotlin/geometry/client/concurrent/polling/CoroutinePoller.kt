@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import nl.jhvh.kotlin.geometry.model.twodimensional.TwoDimensional
 import nl.jhvh.kotlin.util.logger
 import nl.jhvh.kotlin.util.minus
@@ -21,7 +23,6 @@ import kotlin.time.toDuration
 interface Poller<T> {
     @ExperimentalTime
     fun poll(delay: Duration): Flow<T?>
-    fun close()
 }
 
 /**
@@ -29,16 +30,16 @@ interface Poller<T> {
  * Simplified & modified for the goal of the Guild Night
  */
 @ExperimentalCoroutinesApi
-@ExperimentalTime
 class CoroutinePoller<T>(
     val repository: DataRepository<T>,
     val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : Poller<T> {
 
-    private val logger = logger()
+    val logger = logger()
 
+    @ExperimentalTime
     override fun poll(delay: Duration): Flow<T?> {
-        var lastCall: LocalDateTime = LocalDateTime.now()
+        var lastCall: LocalDateTime
         return channelFlow {
             while (!isClosedForSend) {
                 lastCall = LocalDateTime.now()
@@ -51,14 +52,12 @@ class CoroutinePoller<T>(
         }.flowOn(dispatcher)
     }
 
-    override fun close() {
-        dispatcher.cancel()
-    }
-
 }
 
+private const val iterationCount = 100
+
 /**
- * NOTE: This `main` method will run infinitely until interrupted!
+ * NOTE: This `main` method will perform [iterationCount] iterations; may take quite some time!
  *
  * Runs the [CoroutinePoller] with a [TwoDimensionalRepository] to periodically generate
  * various [TwoDimensional]s, with a random delay.
@@ -74,7 +73,7 @@ class CoroutinePoller<T>(
  */
 @ExperimentalCoroutinesApi
 @ExperimentalTime
-suspend fun main() {
+fun main() {
 
     val logger = logger(CoroutinePoller::class.java)
 
@@ -88,6 +87,16 @@ suspend fun main() {
     val pollInterval = 1.toDuration(DurationUnit.SECONDS)
     val flow: Flow<TwoDimensional?> = poller.poll(pollInterval)
 
-    flow.collect { logger.info { "Collected: ${it.toString()}" } }
+    var count = 0
+    runBlocking {
+        launch {
+            flow.collect {
+                logger.info { "# ${++count} - Collected: ${it.toString()}" }
+                if (count >= iterationCount) {
+                    this.coroutineContext.cancel()
+                }
+            }
+        }
+    }
 
 }
