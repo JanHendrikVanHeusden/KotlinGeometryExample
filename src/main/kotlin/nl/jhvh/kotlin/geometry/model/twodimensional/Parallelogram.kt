@@ -12,8 +12,9 @@ import nl.jhvh.kotlin.util.logger
 import kotlin.math.atan
 import kotlin.math.sin
 
-private const val minAngleDegrees = 0.0
-private const val maxAngleDegrees = 90.0
+// should be private, but made public for demo of static call from Java code
+const val minAngleDegrees = 0.0
+const val maxAngleDegrees = 90.0
 
 data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDegrees: Double) : TwoDimensional {
 

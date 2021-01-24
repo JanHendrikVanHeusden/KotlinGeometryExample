@@ -5,7 +5,7 @@ enum class Dimensional(val dimensionCount: Int) {
     twoDimensional(2),
     threeDimensional(3);
 
-    companion object {
+    companion object Mapping {
         // dimensionCount must be unique, but this mapping does NOT throw an exception when not unique!
         // If we really want so, we have to check uniqueness by ourselves
         private val dimensionalMapper: Map<Int, Dimensional> = values().map { it.dimensionCount to it }.toMap()
