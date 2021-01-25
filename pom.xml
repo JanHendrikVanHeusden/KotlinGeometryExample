@@ -86,6 +86,9 @@
 
                 <configuration>
                     <jvmTarget>13</jvmTarget>
+                    <args>
+                        <arg> -Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi</arg>
+                    </args>
                 </configuration>
             </plugin>
 

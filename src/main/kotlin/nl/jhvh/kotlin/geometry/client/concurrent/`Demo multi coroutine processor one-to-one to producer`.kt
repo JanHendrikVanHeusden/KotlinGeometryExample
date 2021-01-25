@@ -1,7 +1,6 @@
 package nl.jhvh.kotlin.geometry.client.concurrent
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
@@ -17,7 +16,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 @ExperimentalTime
-@ExperimentalCoroutinesApi
 class `Massive concurrent multi-coroutine producer processor`() {
 
     private val logger = logger()
@@ -47,7 +45,6 @@ class `Massive concurrent multi-coroutine producer processor`() {
 }
 
 @ExperimentalTime
-@ExperimentalCoroutinesApi
 fun main() {
     // Let's give the current Thread a distinctive name, so we can easily see that we are running in same Thread all the time
     Thread.currentThread().name = "${Thread.currentThread().id} - Concurrency in single Thread"

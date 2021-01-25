@@ -2,7 +2,6 @@ package nl.jhvh.kotlin.geometry.client.concurrent.polling
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +29,6 @@ interface Poller<T> {
  * Thanks to article [Polling with Kotlin Channels & Flows by Mohit Sarveiya](https://proandroiddev.com/polling-with-kotlin-channels-flows-1a69e94fdfe9)
  * Simplified & modified for the goal of the Guild Night
  */
-@ExperimentalCoroutinesApi
 @ExperimentalTime
 class CoroutinePoller<T>(
     private val repository: DataRepository<T>,
@@ -73,7 +71,6 @@ private const val iterationCount = 100
  * This is due to the fact that the coroutine runs in the same context as the generation of the [TwoDimensional].
  * Query Google on "Structured concurrency" to find out more!
  */
-@ExperimentalCoroutinesApi
 @ExperimentalTime
 fun main() {
 

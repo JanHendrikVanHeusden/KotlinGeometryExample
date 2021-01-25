@@ -2,7 +2,6 @@ package nl.jhvh.kotlin.geometry.client.concurrent.polling
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -10,14 +9,12 @@ import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withTimeout
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
 
 @ExperimentalTime
-@ExperimentalCoroutinesApi
 internal class CoroutinePollerTest {
 
     private val repositoryMock: DataRepository<String> = mockk()
@@ -29,15 +26,13 @@ internal class CoroutinePollerTest {
 
     private val testScope = TestCoroutineScope(testDispatcher)
 
-    @BeforeEach
-    fun setUp() {
-        // Note the coEvery (instead of every), required when mocking coroutine stuff
-        coEvery { repositoryMock.getData() } answers { "$testData ${++counter}" }
-    }
-
     @Test
     // @Timeout(2, unit = TimeUnit.SECONDS) // Timeout does not work! -> wanna try? comment out job.cancel()
     fun `should poll every second`() {
+        // given
+        // Note the coEvery (instead of every), required when mocking coroutine stuff
+        coEvery { repositoryMock.getData() } answers { "$testData ${++counter}" }
+
         testScope.runBlockingTest {
             // assertTimeoutPreemptively(Duration.ofMillis(500)) /* Timeout does not work! */ {
 
@@ -45,6 +40,7 @@ internal class CoroutinePollerTest {
             // timeMillis should be >= time as used in the advanceTimeBy() calls
             // (and probably allow some processing time to avoid flaky tests?)
             withTimeout(timeMillis = 5000) {
+                // when
                 val flow = subject.poll(1.toDuration(DurationUnit.SECONDS))
                 var result: String? = null
 
@@ -53,6 +49,7 @@ internal class CoroutinePollerTest {
                         result = it
                     }
                 }
+                // then
                 assertThat(result).isEqualTo("$testData 1")
                 testDispatcher.advanceTimeBy(delayTimeMillis = 1000)
                 assertThat(result).isEqualTo("$testData 2")
