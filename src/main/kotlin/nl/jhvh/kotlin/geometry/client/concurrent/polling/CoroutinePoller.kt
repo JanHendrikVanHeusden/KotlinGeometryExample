@@ -111,7 +111,9 @@ fun main() {
                 val ready = count >= iterationCount
 
                 if (ready || stopIt) {
+                    // Note that it stops all concurrent coroutines when cancelled!
                     this.coroutineContext.cancel()
+
                     if (stopIt) {
                         scanner.reset()
                         logger.warn { "\nCancelled by user input after $count iterations" }

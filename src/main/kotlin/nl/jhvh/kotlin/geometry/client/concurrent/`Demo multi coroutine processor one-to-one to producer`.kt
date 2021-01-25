@@ -52,20 +52,20 @@ fun main() {
     // Let's give the current Thread a distinctive name, so we can easily see that we are running in same Thread all the time
     Thread.currentThread().name = "${Thread.currentThread().id} - Concurrency in single Thread"
 
+    val count = 10000
+    val maxDelayMillis = 1000L
+    println("\n\nAbout to generate $count Rectangles, each one taking a random time between 0 and $maxDelayMillis ms\n\n")
+
     val minBound = Rectangle(0.0, 0.0)
     val maxBound = Rectangle(100.0, 100.0)
-    val count = 10000
-
-    val maxDelayMillis = 1000L
-    println("\n\nGeneration of a Rectangles set to random time between 0 and $maxDelayMillis ms")
-    println("$count rectangles will be generated\n\n")
     val spec = RectangleSpecifierByExample(minBound, maxBound, maxDelayMillis)
 
     val list: MutableList<Rectangle> = mutableListOf()
     val (_, elapsed) = measureTimedValue {
         `Massive concurrent multi-coroutine producer processor`().produceParallelograms(spec, count, list)
     }
-    println("\n\nREADY! processed ${list.size} Rectangles in ${elapsed}; total Rectangle generation time was ${spec.duration()}.")
-    println("Time sharing factor by coroutines = ${((spec.duration() / elapsed).roundToInt())}")
 
+    println("\n\nReady! Generated $count Rectangles, each one taking a random time between 0 and $maxDelayMillis ms\n")
+    println("Processed ${list.size} Rectangles in ${elapsed}; total Rectangle generation time was ${spec.duration()}\n")
+    println("Time sharing factor by coroutines = ${((spec.duration() / elapsed).roundToInt())}")
 }
