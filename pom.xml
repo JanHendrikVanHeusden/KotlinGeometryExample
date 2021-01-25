@@ -14,18 +14,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
         <kotlin.version>1.4.21</kotlin.version>
-        <kotlinx-coroutines.version>1.4.2</kotlinx-coroutines.version>
 
         <commons-lang3.version>3.11</commons-lang3.version>
-        <guava.version>30.1-jre</guava.version>
-
         <!-- Take care when upgrading slf4j to version 1.8 or higher!
              Compatibility with log4j 2 may be broken, see https://logging.apache.org/log4j/2.x/log4j-slf4j-impl/ !!
              So another implementation for log4j-slf4j-impl will probably be required (log4j-slf4j18-impl)
         -->
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <log4j.version>2.14.0</log4j.version>
-        <kotlin-logging.version>1.8.3</kotlin-logging.version>
+        <kotlin-logging.version>1.12.0</kotlin-logging.version>
 
         <!-- Maven plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -36,9 +33,9 @@
         <!-- Test -->
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <junit.platform.version>1.0.3</junit.platform.version>
-        <assertj-core.version>3.18.1</assertj-core.version>
-        <mockk.version>1.10.3-jdk8</mockk.version>
-        <mockito.version>3.6.28</mockito.version>
+        <assertj-core.version>3.19.0</assertj-core.version>
+        <mockk.version>1.10.5</mockk.version>
+        <mockito.version>3.7.7</mockito.version>
 
     </properties>
 
@@ -98,27 +95,6 @@
                     <release>11</release>
                 </configuration>
                 <executions>
-                    <!-- Default execution replaced because of mixed sources (Kotlin, Java).
-                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
-                    -->
-                    <!--                    <execution>-->
-                    <!--                        <id>compile</id>-->
-                    <!--                        <phase>compile</phase>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>compile</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
-                    <!--                    <execution>-->
-                    <!--                        <id>testCompile</id>-->
-                    <!--                        <phase>test-compile</phase>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>testCompile</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
-
-                    <!-- Replacing default-compile as it is treated specially by maven
-                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
-                    -->
                     <execution>
                         <id>default-compile</id>
                         <phase>none</phase>
@@ -203,39 +179,15 @@
 
         <!-- Kotlin -->
         <dependency>
-            <!-- Kotlin standard library for JDK 8 and higher -->
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-common</artifactId>
-            <version>${kotlin.version}</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>20.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>${kotlin.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Kotlin coroutines -->
-        <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>${kotlinx-coroutines.version}</version>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlinx</groupId>-->
-<!--            <artifactId>kotlinx-coroutines-core-jvm</artifactId>-->
-<!--            <version>${kotlinx-coroutines.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlinx</groupId>-->
-<!--            <artifactId>kotlinx-coroutines-core-common</artifactId>-->
-<!--            <version>${kotlinx-coroutines.version}</version>-->
-<!--        </dependency>-->
 
         <!-- Apache commons-lang3 -->
         <dependency>
@@ -243,14 +195,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
-        <!-- Google's guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
 
         <!-- Logging: slf4j implemented by Log4J 2 -->
         <!-- Kotlin logging -->
@@ -311,16 +255,18 @@
         </dependency>
 
         <dependency>
-            <!-- mockk, the mocking library for Kotlin, which benefits from the Kotlin language goodies like infix methods -->
+            <!-- mockk, the mocking library for Kotlin
+                 Benefits from the Kotlin language goodies like infix methods
+            -->
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
             <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-coroutines-test</artifactId>
-            <version>${kotlinx-coroutines.version}</version>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk-dsl-jvm</artifactId>
+            <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
 
