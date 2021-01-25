@@ -3,7 +3,6 @@ package nl.jhvh.kotlin.geometry.client.concurrent.polling
 import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withTimeout
 import nl.jhvh.kotlin.geometry.model.twodimensional.Parallelogram
 import nl.jhvh.kotlin.geometry.model.twodimensional.Rectangle
