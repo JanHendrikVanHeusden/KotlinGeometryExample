@@ -1,4 +1,4 @@
-package nl.jhvh.kotlin
+package nl.jhvh.kotlin.basics
 
 class ExplicitGetterSetter {
 

@@ -6,8 +6,6 @@ import nl.jhvh.java.util.Log;
 import java.util.Objects;
 
 import static java.lang.Math.sin;
-import static nl.jhvh.java.conversion.ImperialMetricConversion.m2ToSquareFeet;
-import static nl.jhvh.java.conversion.ImperialMetricConversion.meterToFeet;
 import static nl.jhvh.java.geometry.model.GeometryType.PARALLELOGRAM;
 import static nl.jhvh.java.geometry.util.GeometryUtil.DEGREES_TO_RADIANS_FACTOR;
 import static nl.jhvh.java.geometry.util.GeometryUtil.radiansToDegrees;
@@ -139,10 +137,8 @@ public class Parallelogram implements TwoDimensional {
 
         System.out.println("The " + parallelogram + " has length " + parallelogram.getLength() +
                 " and width " + parallelogram.getWidth());
-        System.out.println("It's area is " + parallelogram.getArea() + " m2 ( " +
-                m2ToSquareFeet(parallelogram.getArea()) + " square feet)");
-        System.out.println("It's circumference is " + parallelogram.getCircumference() + " m ( " +
-                meterToFeet(parallelogram.getCircumference()) + " feet)");
+        System.out.println("It's area is " + parallelogram.getArea() + " m2");
+        System.out.println("It's circumference is " + parallelogram.getCircumference() + " m");
     }
 
 }

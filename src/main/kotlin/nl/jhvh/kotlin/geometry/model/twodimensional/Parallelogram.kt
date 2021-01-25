@@ -1,14 +1,11 @@
 package nl.jhvh.kotlin.geometry.model.twodimensional
 
-import nl.jhvh.kotlin.conversion.m2ToSquareFeet
-import nl.jhvh.kotlin.conversion.meterToFeet
 import nl.jhvh.kotlin.geometry.model.Dimensional
 import nl.jhvh.kotlin.geometry.model.Dimensional.twoDimensional
 import nl.jhvh.kotlin.geometry.model.GeometryType
 import nl.jhvh.kotlin.geometry.model.GeometryType.PARALLELOGRAM
 import nl.jhvh.kotlin.geometry.util.degreesToRadiansFactor
 import nl.jhvh.kotlin.geometry.util.radiansToDegrees
-import nl.jhvh.kotlin.util.logger
 import kotlin.math.atan
 import kotlin.math.sin
 
@@ -22,27 +19,14 @@ data class Parallelogram constructor(val s1: Double, val s2: Double, val angleDe
         validateInput()
     }
 
-    override val dimensional: Dimensional = twoDimensional
-
-    override val geometryType: GeometryType = PARALLELOGRAM
-
     val angleRadians: Double = angleDegrees * degreesToRadiansFactor
     val length: Double = s1
-
-    // pretend that it's a heavy initialization, so lazy
-    // NB: default lazy() initialization mode = LazyThreadSafetyMode.SYNCHRONIZED.
-    val width: Double by lazy {
-        logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.width" }
-        s2 * sin(angleRadians)
-    }
-
+    val width = s2 * sin(angleRadians)
+    override val dimensional: Dimensional = twoDimensional
+    override val geometryType: GeometryType = PARALLELOGRAM
     override val circumference: Double = (s1 + s2) * 2
 
-    // lazy because it uses width (which is also lazy)
-    override val area: Double by lazy {
-        logger().debug { "Lazy initialization of ${this.javaClass.simpleName}.area" }
-        s1 * width
-    }
+    override val area = s1 * width
 
     private fun validateInput() {
         require(s1 >= 0.0 && s2 >= 0.0) { "Lengths of both sides must be positive, but sides s1 , s2 are $s1 , $s2" }
@@ -59,6 +43,6 @@ fun main() {
     val parallelogram = Parallelogram(10.0, 5.0, angle)
 
     println("The $parallelogram has length ${parallelogram.length} and width ${parallelogram.width}")
-    println("It's area is ${parallelogram.area} m2 (${parallelogram.area.m2ToSquareFeet()} square feet)")
-    println("It's circumference is ${parallelogram.circumference} m (${parallelogram.circumference.meterToFeet()} feet)")
+    println("It's area is ${parallelogram.area} m2")
+    println("It's circumference is ${parallelogram.circumference} m")
 }

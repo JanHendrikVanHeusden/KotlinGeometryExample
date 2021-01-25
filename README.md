@@ -74,20 +74,3 @@ Only a few changes had to be made to have the Java code called by the Kotlin tes
 
 So the strict separation in the main `branch` (Mockito in Java tests to test Java classes, `mockk` in Kotlin test to test Kotlin classes)
 is not technically imposed, but only exists for the sake of this demo (Guild Night).
-
-
-## Coroutines / concurrency
-Package `nl.jhvh.kotlin.geometry.client.concurrent` gives examples of achieving concurrency without parallelism, by means of coroutines.
-
-> #### Concurrent vs. parallel
-> * Parallel is always concurrent; but concurrent is not necessarily parallel.
-> * Think of Javascript which always operates single threaded (so not parallel) in your browser, but still allow asynchronous (concurrent) operations
-> * Coroutines in Kotlin allow to have work done concurrency, but not inherently parallel
->    * But parallel operation is possible with coroutines when running in a JVM or other multi-threaded environment.
->
-> | Computers | Human world |
-> |-----------|-------------|
-> | ![Image "Concurrency vs. parallelism"](./images/Concurrency-vs-Parallelism-small.png "Concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism") | ![Image "Real world concurrency vs. parallelism"](./images/Real-world-concurrency-vs-Real-world-parallelism-with-comments-small.png "Real world concurrency vs. parallelism, from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism") |
->
-> The above images are taken from https://www.codeproject.com/Articles/1267757/Concurrency-vs-Parallelism.
-> *Article Copyright 2018 by Shivprasad koirala, licensed under [The Code Project Open License (CPOL)](http://www.codeproject.com/info/cpol10.aspx)*
