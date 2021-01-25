@@ -15,6 +15,7 @@ import nl.jhvh.kotlin.geometry.model.twodimensional.TwoDimensional
 import nl.jhvh.kotlin.util.logger
 import nl.jhvh.kotlin.util.minus
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
@@ -30,14 +31,14 @@ interface Poller<T> {
  * Simplified & modified for the goal of the Guild Night
  */
 @ExperimentalCoroutinesApi
+@ExperimentalTime
 class CoroutinePoller<T>(
-    val repository: DataRepository<T>,
-    val dispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val repository: DataRepository<T>,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : Poller<T> {
 
     val logger = logger()
 
-    @ExperimentalTime
     override fun poll(delay: Duration): Flow<T?> {
         var lastCall: LocalDateTime
         return channelFlow {
@@ -77,6 +78,18 @@ private const val iterationCount = 100
 fun main() {
 
     val logger = logger(CoroutinePoller::class.java)
+    val pollInterval = 1.toDuration(DurationUnit.SECONDS)
+
+    val expectedDemoDuration = pollInterval * iterationCount
+    val scanner = Scanner(System.`in`)
+    if (expectedDemoDuration > 10.toDuration(DurationUnit.SECONDS)) {
+        logger.warn { "This demo will produce $iterationCount geometries with intervals of $pollInterval" }
+        println()
+        println("Expected duration: $expectedDemoDuration")
+        println("Press enter to start!")
+        scanner.nextLine()
+        scanner.reset()
+    }
 
     val repoTimeOut = 300.toDuration(DurationUnit.MILLISECONDS)
     // generation delay a bit longer than repo timeout, so will sometimes succeed, sometimes timeout
@@ -85,7 +98,6 @@ fun main() {
     val repo = TwoDimensionalRepository(timeOut = repoTimeOut, generationMaxDelay = generationMaxDelay)
 
     val poller = CoroutinePoller(repo, Dispatchers.Default)
-    val pollInterval = 1.toDuration(DurationUnit.SECONDS)
     val flow: Flow<TwoDimensional?> = poller.poll(pollInterval)
 
     var count = 0
@@ -93,8 +105,19 @@ fun main() {
         launch {
             flow.collect {
                 logger.info { "# ${++count} - Collected: ${it.toString()}" }
-                if (count >= iterationCount) {
+
+                // Has user pressed enter?
+                val stopIt = scanner.hasNextLine()
+                val ready = count >= iterationCount
+
+                if (ready || stopIt) {
                     this.coroutineContext.cancel()
+                    if (stopIt) {
+                        scanner.reset()
+                        logger.warn { "\nCancelled by user input after $count iterations" }
+                    } else {
+                        logger.info { "\nFinished ($count iterations completed)" }
+                    }
                 }
             }
         }
