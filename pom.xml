@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
         <kotlin.version>1.4.21</kotlin.version>
+        <jetbrains-annotation.version>20.1.0</jetbrains-annotation.version>
 
         <commons-lang3.version>3.11</commons-lang3.version>
         <!-- Take care when upgrading slf4j to version 1.8 or higher!
@@ -183,10 +184,17 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>20.1.0</version>
+            <version>${jetbrains-annotation.version}</version>
         </dependency>
 
         <!-- Apache commons-lang3 -->
