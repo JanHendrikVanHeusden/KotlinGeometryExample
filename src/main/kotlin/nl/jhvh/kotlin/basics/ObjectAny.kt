@@ -3,21 +3,24 @@
 package nl.jhvh.kotlin.basics
 
 class ObjectAny {
-    val any: Any = Any()
-    val anObject: Object = Object()
+    // The root of the Kotlin class hierarchy. Every Kotlin class has Any as a superclass.
+    val myAny: Any = Any()          // kotlin.Any
+
+    // The root of the Java class hierarchy. Every Java class has Object as a superclass.
+    val myObject: Object = Object() // java.lang.Object
 }
 
 @Suppress("USELESS_IS_CHECK")
 fun main() {
     println()
-    println("Do not use Object in Kotlin!! Here for this (somewhat weird) demo only!!")
+    println("Do not use java.lang.Object in Kotlin!! Here for this (somewhat weird) demo only!!")
     println()
     val ref = ObjectAny()
 
-    val anyIsAny = (ref.any is Any)
-    val anyIsObject = (ref.any is Object)
-    val objectIsAny = (ref.anObject is Any)
-    val objectIsObject = (ref.anObject is Object)
+    val anyIsAny = (ref.myAny is Any)
+    val anyIsObject = (ref.myAny is Object)
+    val objectIsAny = (ref.myObject is Any)
+    val objectIsObject = (ref.myObject is Object)
 
     println("Any is Any: $anyIsAny")             // true
     println("Any is Object: $anyIsObject")       // true
@@ -27,7 +30,7 @@ fun main() {
 
     // Object.notify() - compiles
     try {
-        ref.anObject.notifyAll()
+        ref.myObject.notifyAll()
     } catch (e: IllegalMonitorStateException) {
         println("Just showing that Object.notifyAll() compiles, but don't do this!")
     }
