@@ -36,10 +36,6 @@ internal class CoroutinePollerTest {
     }
 
     @Test
-    fun close() {
-    }
-
-    @Test
     // @Timeout(2, unit = TimeUnit.SECONDS) // Timeout does not work! -> wanna try? comment out job.cancel()
     fun `should poll every second`() {
         testScope.runBlockingTest {
