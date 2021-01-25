@@ -81,14 +81,15 @@ fun main() {
     val pollInterval = 1.toDuration(DurationUnit.SECONDS)
 
     val expectedDemoDuration = pollInterval * iterationCount
-    val scanner = Scanner(System.`in`)
     if (expectedDemoDuration > 10.toDuration(DurationUnit.SECONDS)) {
         logger.warn { "This demo will produce $iterationCount geometries with intervals of $pollInterval" }
         println()
         println("Expected duration: $expectedDemoDuration")
         println("Press enter to start!")
-        scanner.nextLine()
-        scanner.reset()
+        with(Scanner(System.`in`)) {
+            this.nextLine()
+            this.reset()
+        }
     }
 
     val repoTimeOut = 300.toDuration(DurationUnit.MILLISECONDS)
@@ -104,25 +105,13 @@ fun main() {
     runBlocking {
         launch {
             flow.collect {
-                logger.info { "# ${++count} - Collected: ${it.toString()}" }
-
-                // Has user pressed enter?
-                val stopIt = scanner.hasNextLine()
-                val ready = count >= iterationCount
-
-                if (ready || stopIt) {
+                logger.info { "# ${++count} - Collected: $it" }
+                if (count >= iterationCount) {
                     // Note that it stops all concurrent coroutines when cancelled!
                     this.coroutineContext.cancel()
-
-                    if (stopIt) {
-                        scanner.reset()
-                        logger.warn { "\nCancelled by user input after $count iterations" }
-                    } else {
-                        logger.info { "\nFinished ($count iterations completed)" }
-                    }
+                    logger.info { "\nFinished ($count iterations completed)" }
                 }
             }
         }
     }
-
 }
