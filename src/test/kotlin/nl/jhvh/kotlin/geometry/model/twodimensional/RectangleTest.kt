@@ -8,14 +8,11 @@ import io.mockk.unmockkConstructor
 import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertFailsWith
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class RectangleTest {
 
     // values can be reassigned by individual tests
@@ -24,25 +21,17 @@ internal class RectangleTest {
 
     private lateinit var parallelogramDelegateMock: Parallelogram
 
-    @BeforeAll
-    fun setUpTest() {
-        // Note that this mock will stay active until unmockkConstructor is called!
+    @BeforeEach
+    fun setUp() {
+        // NB 1: this mock will stay active in the JVM until unmockkConstructor is called!
+        // NB 2: Do not do this in a @BeforeAll, that may cause flaky tests: mock not found -> timing issue?
         mockkConstructor(Parallelogram::class)
 
         every { anyConstructed<Parallelogram>().circumference } answers {circumference}
         every { anyConstructed<Parallelogram>().area } answers {area}
 
         parallelogramDelegateMock = Parallelogram(s1 = 0.0, s2 = 0.0, angleDegrees = 0.0)
-    }
 
-    @AfterAll
-    fun tearDownTest() {
-        // Important!
-        unmockkConstructor(Parallelogram::class)
-    }
-
-    @BeforeEach
-    fun setUp() {
         circumference = 0.0
         area = 0.0
         clearMocks(parallelogramDelegateMock, answers = false, recordedCalls = true, verificationMarks = true )
@@ -54,6 +43,12 @@ internal class RectangleTest {
         every { anyConstructed<Parallelogram>().area } answers {area}
 
         parallelogramDelegateMock = Parallelogram(s1 = 0.0, s2 = 0.0, angleDegrees = 0.0)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        // Important!
+        unmockkConstructor(Parallelogram::class)
     }
 
     @Test
