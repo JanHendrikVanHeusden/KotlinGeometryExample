@@ -96,24 +96,6 @@
                     <release>11</release>
                 </configuration>
                 <executions>
-                    <!-- Default execution replaced because of mixed sources (Kotlin, Java).
-                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
-                    -->
-                    <!--                    <execution>-->
-                    <!--                        <id>compile</id>-->
-                    <!--                        <phase>compile</phase>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>compile</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
-                    <!--                    <execution>-->
-                    <!--                        <id>testCompile</id>-->
-                    <!--                        <phase>test-compile</phase>-->
-                    <!--                        <goals>-->
-                    <!--                            <goal>testCompile</goal>-->
-                    <!--                        </goals>-->
-                    <!--                    </execution>-->
-
                     <!-- Replacing default-compile as it is treated specially by maven
                          See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
                     -->
