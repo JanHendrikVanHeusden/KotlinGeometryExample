@@ -1,3 +1,5 @@
+@file:Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+
 package nl.jhvh.kotlin.basics
 
 class ObjectAny {
@@ -5,6 +7,7 @@ class ObjectAny {
     val anObject: Object = Object()
 }
 
+@Suppress("USELESS_IS_CHECK")
 fun main() {
     val ref = ObjectAny()
     val anyIsAny = (ref.any is Any)
