@@ -96,6 +96,9 @@
                     <release>11</release>
                 </configuration>
                 <executions>
+                    <!-- Replacing default-compile as it is treated specially by maven
+                         See https://kotlinlang.org/docs/reference/using-maven.html#compiling-kotlin-and-java-sources
+                    -->
                     <execution>
                         <id>default-compile</id>
                         <phase>none</phase>
@@ -184,7 +187,6 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
