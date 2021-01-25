@@ -1,4 +1,4 @@
-package nl.jhvh.java.callingkotlin;
+package nl.jhvh.java.callingkotlinjava;
 
 import nl.jhvh.java.util.Log;
 import nl.jhvh.kotlin.geometry.model.Dimensional;
