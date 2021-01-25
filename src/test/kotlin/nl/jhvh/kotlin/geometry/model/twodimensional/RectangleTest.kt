@@ -8,6 +8,7 @@ import io.mockk.unmockkConstructor
 import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.offset
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -132,7 +133,7 @@ internal class RectangleTest {
         val amendedCopy1 = rectangle1.copy(width = width/5.0)
         assertThat(amendedCopy1).isNotEqualTo(rectangle1)
         assertThat(amendedCopy1.length).isEqualTo(rectangle1.length)
-        assertThat(amendedCopy1.width).isCloseTo(width / 5.0, Assertions.offset(0.1))
+        assertThat(amendedCopy1.width).isCloseTo(width / 5.0, offset(0.1))
 
         // verify that the lazy attribute was not called
         verify (exactly = 0) { parallelogramDelegateMock.area }
