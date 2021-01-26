@@ -12,22 +12,21 @@ fun main() {
 
     println(myList.drop(3))
     println(numericStrings(myList))
+    println()
 
-    println("Unfiltered size: ${myLongList.size}")
-
+    println("myLongList size:                   ${myLongList.size}")
     val filtered = myLongList
         .filter { it % 10 == 0 }
         .map { it.toString() }
         .filter(isNumericString)
-    println("Filtered by multiples of 10; size = ${filtered.size}")
+    println("Filtered by multiples of 10; size:  ${filtered.size}")
     println()
 
-    val mappedByLastNumber: Map<Int, List<Int>> =
-        myLongList
+    val mappedByLastNumber: Map<Int, List<Int>> = myLongList
             .takeWhile { it <= 500 }.dropLast(300)            // keep first 200 only
             .filter { it % 6 == 0 }                              // only when divisible by 6
             .groupBy { it.toString().last().toString().toInt() } // group by last digit
-            .toSortedMap()
+            .toSortedMap()                                       // sorted by keys
 
     println("Numbers 0..200, filtered on divisible by 6, then mapped by last digit:")
     println(mappedByLastNumber)
