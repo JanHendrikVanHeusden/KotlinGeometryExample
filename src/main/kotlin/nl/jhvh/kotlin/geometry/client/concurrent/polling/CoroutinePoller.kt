@@ -14,7 +14,6 @@ import nl.jhvh.kotlin.geometry.model.twodimensional.TwoDimensional
 import nl.jhvh.kotlin.util.logger
 import nl.jhvh.kotlin.util.minus
 import java.time.LocalDateTime
-import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
@@ -42,7 +41,9 @@ class CoroutinePoller<T>(
         return channelFlow {
             while (!isClosedForSend) {
                 lastCall = LocalDateTime.now()
+
                 send(repository.getData())
+
                 val remainingDelay = delay - (LocalDateTime.now() - lastCall)
                 if (remainingDelay.isPositive()) {
                     delay(remainingDelay)
@@ -79,18 +80,15 @@ fun main() {
 
     val expectedDemoDuration = pollInterval * iterationCount
     if (expectedDemoDuration > 10.toDuration(DurationUnit.SECONDS)) {
-        logger.warn { "This demo will produce $iterationCount geometries with intervals of $pollInterval" }
+        println("This demo will produce $iterationCount geometries with intervals of $pollInterval")
         println()
         println("Expected duration: $expectedDemoDuration")
-        println("Press enter to start!")
-        with(Scanner(System.`in`)) {
-            this.nextLine()
-            this.reset()
-        }
+        println()
     }
 
     val repoTimeOut = 300.toDuration(DurationUnit.MILLISECONDS)
-    // generation delay a bit longer than repo timeout, so will sometimes succeed, sometimes timeout
+    // random generation delay at max a bit longer than repo timeout
+    // so will sometimes succeed, sometimes timeout
     val generationMaxDelay = 500.toDuration(DurationUnit.MILLISECONDS)
 
     val repo = TwoDimensionalRepository(timeOut = repoTimeOut, generationMaxDelay = generationMaxDelay)
