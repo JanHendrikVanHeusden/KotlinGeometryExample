@@ -60,7 +60,7 @@ public class LambdasJava {
 
     public int calculate(int int1, int int2, BiFunction<Integer, Integer, Integer> calculator) {
         Integer result = calculator.apply(int1, int2);
-        logger.info(() -> "" + int1 + int2 + " -> " + result);
+        logger.info(() -> "" + int1 + " " + int2 + " -> " + result);
         return result;
     }
 
