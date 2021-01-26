@@ -14,6 +14,7 @@ fun handleString(
     locale: Locale? = null,
     charset: Charset = UTF_8
 ) {
+    // Don't use toByteArray(charset) with Strings in real world code! Might cause surprising results!
     println("${locale ?: "\t"} \t\t${string.toByteArray(charset).size} bytes \t\t $string")
 }
 
