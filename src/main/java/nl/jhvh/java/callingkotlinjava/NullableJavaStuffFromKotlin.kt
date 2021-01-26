@@ -8,9 +8,9 @@ fun main() {
     val radiansToDegrees: Double = radiansToDegrees(1.0)
     println(radiansToDegrees)
 
-    // Kotlin can not figure out whether this returns a nullable value.
+    // Kotlin NOT figure out whether this returns a nullable value.
     // Return type is InputStream! (which means that you have to decide yourself)
-    // We know it will be not null in not-embedded system
+    // We know it will be not null in not-embedded systems
     val inputStream: InputStream = System.`in`
     @Suppress("SENSELESS_COMPARISON")
     println("Is inputStream null? " + (inputStream == null))
