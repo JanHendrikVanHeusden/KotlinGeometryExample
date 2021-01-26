@@ -2,7 +2,7 @@ package nl.jhvh.kotlin.basics
 
 data class NestedDataClass(val nestedVar: String)
 
-data class DataClass(val var1: String, val var2: Int, val var3: NestedDataClass)
+data class DataClass(val stringVal: String, val intVal: Int, val nestedClassVal: NestedDataClass)
 
 fun main() {
     val nested = NestedDataClass("hoi")
@@ -18,9 +18,9 @@ fun main() {
     // For exact same reference, use ===
     // This is equivalent to Java ==
     // We use it to show that the copy method makes a shallow copy, not a deep copy
-    println("Shallow copy? ${data.copy().var3 === nested}") // true
+    println("Shallow copy? ${data.copy().nestedClassVal === nested}") // true
 
     // Nice! Copy but with 1 value different
-    val data2 = data.copy(var2 = -1)
+    val data2 = data.copy(intVal = -1)
     println(data2)
 }
