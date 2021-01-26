@@ -28,6 +28,6 @@ fun main() {
             .groupBy { it.toString().last().toString().toInt() } // group by last digit
             .toSortedMap()                                       // sorted by keys
 
-    println("Numbers 0..200, filtered on divisible by 6, then mapped by last digit:")
+    println("Numbers 1..200, filtered on divisible by 6, then mapped by last digit:")
     println(mappedByLastNumber)
 }
