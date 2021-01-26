@@ -7,11 +7,13 @@ import nl.jhvh.kotlin.util.logger
 
 // () -> Int
 val randomIntSupplier = { Random.nextInt() }
-val millisSupplier = { System.currentTimeMillis().toInt() }
+val millisIntSupplier = { System.currentTimeMillis().toInt() }
 
 // () -> String
-val doubleLetterSupplier = { with(Random.nextInt(33, 127).toChar().toString()) { this + this } }
-val dateTimeStringSupplier = { LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString().replace('T', ' ')}
+val doubleLetterSupplier =
+    { with(Random.nextInt(33, 127).toChar().toString()) { this + this } }
+val dateTimeStringSupplier =
+    { LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).toString().replace('T', ' ') }
 
 // (String) -> String
 val inverter = { inputString: String -> StringBuffer(inputString).reverse().toString() }
@@ -21,7 +23,9 @@ val doubler = { inputString: String -> inputString + inputString }
 val multiplier = { a: Int, b: Int -> a * b }
 val subtractor = { a: Int, b: Int -> a - b }
 
-class Lambdas {
+val addFourNumbers = { a: Int, b: Int, c: Int, d: Int -> a + b + c + d }
+
+class LambdasKotlin {
     private val logger = logger()
 
     fun getNumber(numberSupplier: () -> Int) = numberSupplier()
@@ -39,10 +43,10 @@ class Lambdas {
 }
 
 fun main() {
-    val lambdas = Lambdas()
+    val lambdas = LambdasKotlin()
 
     println("Random: ${lambdas.getNumber(randomIntSupplier)}")
-    println("Millis: ${lambdas.getNumber(millisSupplier)}")
+    println("Millis: ${lambdas.getNumber(millisIntSupplier)}")
 
     println()
     println("2 letters: ${lambdas.getString(doubleLetterSupplier)}")
@@ -55,4 +59,6 @@ fun main() {
     println()
     println("multiplied: ${lambdas.calculate(7, 12, multiplier)}")
     println("subtracted: ${lambdas.calculate(69, 14, subtractor)}")
+
+    println("4 numbers added: ${addFourNumbers(2, 4, 6, 8)}")
 }
