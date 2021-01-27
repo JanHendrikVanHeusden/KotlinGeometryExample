@@ -41,7 +41,7 @@ public class LambdasJava {
     public static final BiFunction<Integer, Integer, Integer> multiplier = (Integer a, Integer b) -> a * b;
     public static final BiFunction<Integer, Integer, Integer> subtractor = (Integer a, Integer b) -> a - b;
 
-    public static final QuadFunction<Integer> addFourNumbers = (Integer a, Integer b, Integer c, Integer d) ->  a + b + c + d;
+    public static final MyQuadFunction<Integer> addFourNumbers = (Integer a, Integer b, Integer c, Integer d) ->  a + b + c + d;
 
     private final KLogger logger = LogKt.logger(this.getClass().getName());
 
@@ -87,6 +87,6 @@ public class LambdasJava {
 }
 
 @SuppressWarnings("StandardVariableNames")
-interface QuadFunction<T extends Integer> {
+interface MyQuadFunction<T extends Integer> {
     Integer calcFourInts(T a, T b, T c, T d);
 }
