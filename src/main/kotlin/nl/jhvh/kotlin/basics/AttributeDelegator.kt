@@ -1,7 +1,6 @@
 package nl.jhvh.kotlin.basics
 
 import kotlin.reflect.KProperty
-import nl.jhvh.kotlin.util.logger
 
 class AttributeDelegator(var aValue: Int) {
 
@@ -29,12 +28,13 @@ class MyAttributeDelegate<in R, T> {
     var delegatedValue: T? = null
 
     operator fun getValue(thisRef: R, property: KProperty<*>): T? {
-        return delegatedValue.also { logger(thisRef!!::class.java).info { "getter returned $delegatedValue" } }
+        return delegatedValue
+            .also { println("'${thisRef!!::class.java.simpleName}.${property.name}' (getter) returned $delegatedValue") }
     }
 
     operator fun setValue(thisRef: R, property: KProperty<*>, value: T) {
         val oldValue: T? = delegatedValue
         delegatedValue = value
-        logger(thisRef!!::class.java).info { "old value: [$oldValue]; Set to: [$value]" }
+        println("'${thisRef!!::class.java.simpleName}.${property.name}' (setter) changed old value: [$oldValue] to: [$value]")
     }
 }
