@@ -46,22 +46,22 @@ public class LambdasJava {
 
     private final KLogger logger = LogKt.logger(this.getClass().getName());
 
-    public int getNumber(Supplier<Integer> numberSupplier) {
+    public int supplyNumber(Supplier<Integer> numberSupplier) {
         return numberSupplier.get();
     }
 
-    public String getString(Supplier<String> stringSupplier) {
+    public String supplyString(Supplier<String> stringSupplier) {
         return stringSupplier.get();
     }
 
-    public String handleString(String inputString, Function<String, String> stringHandler) {
-        String result = stringHandler.apply(inputString);
+    public String handleString(String inputString, Function<String, String> stringFunction) {
+        String result = stringFunction.apply(inputString);
         logger.info(() -> inputString + " -> " + result);
         return result;
     }
 
-    public int calculate(int int1, int int2, BiFunction<Integer, Integer, Integer> calculator) {
-        Integer result = calculator.apply(int1, int2);
+    public int calculate(int int1, int int2, BiFunction<Integer, Integer, Integer> calculatorFunction) {
+        Integer result = calculatorFunction.apply(int1, int2);
         logger.info(() -> "" + int1 + " " + int2 + " -> " + result);
         return result;
     }
@@ -69,12 +69,12 @@ public class LambdasJava {
     public static void main(String[] args) {
         final LambdasJava lambdas = new LambdasJava();
 
-        println("Random: " + lambdas.getNumber(randomIntSupplier));
-        println("Millis: " + lambdas.getNumber(millisIntSupplier));
+        println("Random: " + lambdas.supplyNumber(randomIntSupplier));
+        println("Millis: " + lambdas.supplyNumber(millisIntSupplier));
 
         println();
-        println("2 letters: " + lambdas.getString(doubleLetterSupplier));
-        println("date+time: " + lambdas.getString(dateTimeStringSupplier));
+        println("2 letters: " + lambdas.supplyString(doubleLetterSupplier));
+        println("date+time: " + lambdas.supplyString(dateTimeStringSupplier));
 
         println();
         println("doubled:  " + lambdas.handleString("hoi", doubler));

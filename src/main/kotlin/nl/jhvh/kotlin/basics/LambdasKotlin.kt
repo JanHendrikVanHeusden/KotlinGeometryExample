@@ -23,21 +23,21 @@ val doubler = { inputString: String -> inputString + inputString }
 val multiplier = { a: Int, b: Int -> a * b }
 val subtractor = { a: Int, b: Int -> a - b }
 
-val addFourNumbers = { a: Int, b: Int, c: Int, d: Int -> a + b + c + d }
+val addFourNumbers: (Int, Int, Int, Int) -> Int = { a: Int, b: Int, c: Int, d: Int -> a + b + c + d }
 
 class LambdasKotlin {
     private val logger = logger()
 
-    fun getNumber(numberSupplier: () -> Int) = numberSupplier()
-    fun getString(stringSupplier: () -> String) = stringSupplier()
+    fun supplyNumber(numberSupplier: () -> Int) = numberSupplier()
+    fun supplyString(stringSupplier: () -> String) = stringSupplier()
 
-    fun handleString(inputString: String, stringHandler: (String) -> String): String {
-        return stringHandler(inputString)
+    fun handleString(inputString: String, stringFunction: (String) -> String): String {
+        return stringFunction(inputString)
             .also { logger.info { "$inputString -> $it" } }
     }
 
-    fun calculate(int1: Int, int2: Int, calculator: (Int, Int) -> Int): Int {
-        return calculator(int1, int2)
+    fun calculate(int1: Int, int2: Int, calculatorFunction: (Int, Int) -> Int): Int {
+        return calculatorFunction(int1, int2)
             .also { logger.info { "$int1 $int2 -> $it" } }
     }
 }
@@ -45,12 +45,12 @@ class LambdasKotlin {
 fun main() {
     val lambdas = LambdasKotlin()
 
-    println("Random: ${lambdas.getNumber(randomIntSupplier)}")
-    println("Millis: ${lambdas.getNumber(millisIntSupplier)}")
+    println("Random: ${lambdas.supplyNumber(randomIntSupplier)}")
+    println("Millis: ${lambdas.supplyNumber(millisIntSupplier)}")
 
     println()
-    println("2 letters: ${lambdas.getString(doubleLetterSupplier)}")
-    println("date+time: ${lambdas.getString(dateTimeStringSupplier)}")
+    println("2 letters: ${lambdas.supplyString(doubleLetterSupplier)}")
+    println("date+time: ${lambdas.supplyString(dateTimeStringSupplier)}")
 
     println()
     println("doubled:  ${lambdas.handleString("hoi", doubler)}")
