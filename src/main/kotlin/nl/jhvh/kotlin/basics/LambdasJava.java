@@ -16,6 +16,7 @@ public class LambdasJava {
     private static void println() {
         System.out.println();
     }
+
     private static void println(String input) {
         System.out.println(input);
     }
@@ -41,13 +42,14 @@ public class LambdasJava {
     public static final BiFunction<Integer, Integer, Integer> multiplier = (Integer a, Integer b) -> a * b;
     public static final BiFunction<Integer, Integer, Integer> subtractor = (Integer a, Integer b) -> a - b;
 
-    public static final MyQuadFunction<Integer> addFourNumbers = (Integer a, Integer b, Integer c, Integer d) ->  a + b + c + d;
+    public static final MyQuadFunction<Integer> addFourNumbers = (Integer a, Integer b, Integer c, Integer d) -> a + b + c + d;
 
     private final KLogger logger = LogKt.logger(this.getClass().getName());
 
     public int getNumber(Supplier<Integer> numberSupplier) {
         return numberSupplier.get();
     }
+
     public String getString(Supplier<String> stringSupplier) {
         return stringSupplier.get();
     }
