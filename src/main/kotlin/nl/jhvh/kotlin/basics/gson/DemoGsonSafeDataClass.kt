@@ -23,11 +23,11 @@ fun main() {
     println()
     println("angleRadians:  ${parFromJson.angleRadians}")    // 0.0 !!
     println("length:        ${parFromJson.length}")          // 0.0 !!
-    println("width:         ${parFromJson.width}")           // 0.0 !!
+//    println("width:         ${parFromJson.width}")           // NPE !!
     println("dimensional:   ${parFromJson.dimensional}")     // null !! No NPE!
     println("geometryType:  ${parFromJson.geometryType}")    // null !! No NPE!
     println("circumference: ${parFromJson.circumference}")   // 0.0 !!
-    println("area:          ${parFromJson.area}")            // 0.0 !!
+//    println("area:          ${parFromJson.area}")            // NPE !!
 
     println()
     println(">>> Correct!")
