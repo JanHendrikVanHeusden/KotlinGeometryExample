@@ -52,6 +52,7 @@
                 -->
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <!--suppress DifferentKotlinMavenVersion -->
                 <version>${kotlin.version}</version>
                 <executions>
                     <execution>
@@ -93,7 +94,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <release>11</release>
+                    <release>15</release>
                 </configuration>
                 <executions>
                     <!-- Replacing default-compile as it is treated specially by maven
