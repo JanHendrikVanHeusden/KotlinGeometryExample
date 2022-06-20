@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
-        <kotlin.version>1.4.21</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <kotlinx-coroutines.version>1.4.2</kotlinx-coroutines.version>
         <jetbrains-annotation.version>20.1.0</jetbrains-annotation.version>
 
